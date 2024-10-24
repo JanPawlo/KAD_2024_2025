@@ -85,7 +85,7 @@ def speciesShareOfPopulation(speciesCount:dict):
 # returns dictionary of maximum traits
 def getMaximumTraits(data):
     
-    traitNumbers = {
+    traitIndexes = {
         0 : "sepal_length",
         1 : "sepal_width",
         2 : "petal_length",
@@ -102,8 +102,8 @@ def getMaximumTraits(data):
     
     for i in range(len(data)):
         for j in range(4):
-            if maximumTraits[traitNumbers[j]] < data[i][j]:
-                maximumTraits[traitNumbers[j]] = data[i][j]    
+            if maximumTraits[traitIndexes[j]] < data[i][j]:
+                maximumTraits[traitIndexes[j]] = data[i][j]    
 
     return maximumTraits
 
@@ -111,7 +111,7 @@ def getMaximumTraits(data):
 # @data parameter - float [x][y]
 # returns dictionary of minimum traits
 def getMinimumTraits(data):
-    traitNumbers = {
+    traitIndexes = {
         0 : "sepal_length",
         1 : "sepal_width",
         2 : "petal_length",
@@ -127,12 +127,105 @@ def getMinimumTraits(data):
     
     for i in range(len(data)):
         for j in range(4):
-            if minimumTraits[traitNumbers[j]] > data[i][j]:
-                minimumTraits[traitNumbers[j]] = data[i][j]
+            if minimumTraits[traitIndexes[j]] > data[i][j]:
+                minimumTraits[traitIndexes[j]] = data[i][j]
                 
     return minimumTraits
 
+# Sums all values of traits, then divides them by total sample size.
+# @data parameter - float [x][y]
+# returns dictionary of average traits
+def getAverageTraits(data):
+    traitIndexes = {
+        0 : "sepal_length",
+        1 : "sepal_width",
+        2 : "petal_length",
+        3 : "petal_width"        
+        }
+    
+    traitSums = {
+        "sepal_length" : 0, 
+        "sepal_width" : 0,
+        "petal_length" : 0,
+        "petal_width" : 0,
+        }
+    
+    
+    totPop = totalPopulation(data)
+    for i in range(len(data)):
+        for j in range(4):
+            traitSums[traitIndexes[j]] += data[i][j]
+    
+    for i in range(4):
+        traitSums[traitIndexes[i]] = traitSums[traitIndexes[i]] / totPop
+        
+    return traitSums
 
+def getMedianTraits(data):
+    traitIndexes = {
+        0 : "sepal_length",
+        1 : "sepal_width",
+        2 : "petal_length",
+        3 : "petal_width"        
+        }
+    
+    
+    traitMedians = {
+        "sepal_length" : 0, 
+        "sepal_width" : 0,
+        "petal_length" : 0,
+        "petal_width" : 0,
+        }
+    
+    
+    # Creates four lists of traits, resembling how they're written in .csv file
+    
+    fourListsOfTraits = []
+    for i in range(4):
+        fourListsOfTraits[i] = []
+        for j in range(totalPopulation(data)):
+            fourListsOfTraits[i][j] = data[j][i]
+        # finds the median
+        traitMedians[traitIndexes[i]] = findMedianOfList(fourListsOfTraits)
+        
+
+# Finds the median of a 1 dimensional list
+# @entryList parameter - unsorted list
+# returns median value
+def findMedianOfList(entryList:list):
+    entryList.sort()
+    length = len(entryList);
+    if length % 2 == 1:
+        return entryList[int(length/2)]
+    else:
+        avrg = (entryList[int(length/2)] +entryList[int(length/2)+1]) /2
+        return avrg
+    
+    
+def testGetMedianTraits(data):
+    print("Test Get Median Traits")
+
+    data = fileLoader("test_data1.csv")
+    medianTraits = getMedianTraits(data)
+    print( (round(medianTraits["sepal_length"], 5) == 4.86) == True)
+    print( (round(medianTraits["sepal_width"], 5) == 3.31) == True)
+    print( (round(medianTraits["petal_length"], 5) == 1.45) == True)
+    print( (round(medianTraits["petal_width"], 5) == 0.22) == True)
+    print()    
+    
+
+
+def testGetAverageTraits():
+    print("Test Get Average Traits")
+    
+    data = fileLoader("test_data1.csv")
+    averageTraits = getAverageTraits(data)
+    print( (round(averageTraits["sepal_length"], 5) == 4.86) == True)
+    print( (round(averageTraits["sepal_width"], 5) == 3.31) == True)
+    print( (round(averageTraits["petal_length"], 5) == 1.45) == True)
+    print( (round(averageTraits["petal_width"], 5) == 0.22) == True)
+    print()    
+    
 def testGetMinimumTraits():
     print("Test Get Minimum Traits")
     
@@ -195,3 +288,5 @@ def testFileLoader():
 # testSpeciesShareOfPopulation()
 # testGetMaximumTraits()
 # testGetMinimumTraits()
+# testGetAverageTraits()
+testGetMedianTraits()
