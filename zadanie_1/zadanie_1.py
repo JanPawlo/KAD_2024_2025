@@ -94,7 +94,7 @@ def getMaximumTraits(data):
     
     
     maximumTraits = {
-        "sepal_length" : 0, #
+        "sepal_length" : 0,
         "sepal_width" : 0,
         "petal_length" : 0,
         "petal_width" : 0
@@ -179,15 +179,15 @@ def getMedianTraits(data):
     
     
     # Creates four lists of traits, resembling how they're written in .csv file
-    
     fourListsOfTraits = []
     for i in range(4):
-        fourListsOfTraits[i] = []
+        fourListsOfTraits.append([])
         for j in range(totalPopulation(data)):
-            fourListsOfTraits[i][j] = data[j][i]
+            fourListsOfTraits[i].append(data[j][i])
         # finds the median
-        traitMedians[traitIndexes[i]] = findMedianOfList(fourListsOfTraits)
+        traitMedians[traitIndexes[i]] = findMedianOfList(fourListsOfTraits[i])
         
+    return traitMedians
 
 # Finds the median of a 1 dimensional list
 # @entryList parameter - unsorted list
@@ -198,19 +198,19 @@ def findMedianOfList(entryList:list):
     if length % 2 == 1:
         return entryList[int(length/2)]
     else:
-        avrg = (entryList[int(length/2)] +entryList[int(length/2)+1]) /2
+        avrg = (entryList[int(length/2)] + entryList[int(length/2)-1]) /2
         return avrg
     
     
-def testGetMedianTraits(data):
+def testGetMedianTraits():
     print("Test Get Median Traits")
 
     data = fileLoader("test_data1.csv")
     medianTraits = getMedianTraits(data)
-    print( (round(medianTraits["sepal_length"], 5) == 4.86) == True)
-    print( (round(medianTraits["sepal_width"], 5) == 3.31) == True)
-    print( (round(medianTraits["petal_length"], 5) == 1.45) == True)
-    print( (round(medianTraits["petal_width"], 5) == 0.22) == True)
+    print( (round(medianTraits["sepal_length"], 5) == 4.9) == True)
+    print( (round(medianTraits["sepal_width"], 5) == 3.3) == True)
+    print( (round(medianTraits["petal_length"], 5) == 1.4) == True)
+    print( (round(medianTraits["petal_width"], 5) == 0.2) == True)
     print()    
     
 
