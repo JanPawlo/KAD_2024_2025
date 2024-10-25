@@ -187,7 +187,10 @@ def getMedianTraits(data):
         # finds the median
         traitMedians[traitIndexes[i]] = findMedianOfList(fourListsOfTraits[i])
         
+    
     return traitMedians
+
+ 
 
 # Finds the median of a 1 dimensional list
 # @entryList parameter - unsorted list
@@ -196,11 +199,98 @@ def findMedianOfList(entryList:list):
     entryList.sort()
     length = len(entryList);
     if length % 2 == 1:
-        return entryList[int(length/2)]
+        return entryList[int(length/2)] #no +1, because indexes start from 0
     else:
-        avrg = (entryList[int(length/2)] + entryList[int(length/2)-1]) /2
+        avrg = ((entryList[int(length/2)] + entryList[int(length/2)-1]) /2)
         return avrg
+
+
+
+# Finds the quartiles of a 1 dimensional list
+# @entryList parameter - unsorted list
+# returns quartiles - list of [Q1, Q2, Q3]
+def findQuartilesOfList(entryList:list):
+    # entryList.sort()
+    length = len(entryList);
+    quartiles = [] # Q1, Q2, Q3
     
+    median = findMedianOfList(entryList)
+    firstHalf, secondHalf = splitList(entryList)
+    Q1 = findMedianOfList(firstHalf)
+    Q3 = findMedianOfList(secondHalf)
+    
+    return [Q1, median, Q3]
+
+def splitList(entryList):
+    length = len(entryList)
+    
+    if length % 2 == 1:
+        entryList.pop(int(length/2))
+        length -= 1
+    
+    
+    middle = int(length/2)
+    
+    list1 = entryList[0:middle]
+    list2 = entryList[middle:]
+    
+    return list1, list2
+
+def getQuartilesTraits(data):
+    traitIndexes = {
+        0 : "sepal_length",
+        1 : "sepal_width",
+        2 : "petal_length",
+        3 : "petal_width"        
+        }
+    
+    
+    traitQuartiles = {
+        "sepal_length" : [0, 0, 0], 
+        "sepal_width" : [0, 0, 0],
+        "petal_length" : [0, 0, 0],
+        "petal_width" : [0, 0, 0],
+        }
+    
+    
+    # Creates four lists of traits, resembling how they're written in .csv file
+    fourListsOfTraits = []
+    for i in range(4):
+        fourListsOfTraits.append([])
+        for j in range(totalPopulation(data)):
+            fourListsOfTraits[i].append(data[j][i])
+        # finds the median
+        traitQuartiles[traitIndexes[i]] = findQuartilesOfList(fourListsOfTraits[i])
+    return traitQuartiles
+
+def testFindQuartilesOfList():
+    entryList1 = [0, 2, 3, 4, 5, 5, 6, 7]
+    entryList2 = [0, 2, 3, 4, 5, 5, 6]
+    print( "Test Find Quartiles Of List")
+    
+    outputList1 = findQuartilesOfList(entryList1)
+    print( (outputList1[0] == 2.5) == True)
+    print( (outputList1[1] == 4.5) == True)
+    print( (outputList1[2] == 5.5) == True)
+    outputList2 = findQuartilesOfList(entryList2)
+    print( (outputList2[0] == 2) == True)
+    print( (outputList2[1] == 4) == True)
+    print( (outputList2[2] == 5) == True)
+    print()
+    
+def testGetQuartilesTraits():
+    print("Test Get Quartiles Traits")
+    
+    data = fileLoader("test_data1.csv")
+    quartilesTraits = getQuartilesTraits(data)
+    
+    print( (quartilesTraits["sepal_length"][0] == 4.6) == True)
+    print( (quartilesTraits["sepal_length"][1] == 4.9) == True)
+    print( (quartilesTraits["sepal_length"][2] == 5.0) == True)
+    print( (quartilesTraits["petal_width"][0] == 0.2) == True)
+    print( (quartilesTraits["petal_width"][1] == 0.2) == True)
+    print( (quartilesTraits["petal_width"][2] == 0.2) == True)
+    print()        
     
 def testGetMedianTraits():
     print("Test Get Median Traits")
@@ -283,10 +373,12 @@ def testFileLoader():
     print()
     
 
-# testFileLoader()
-# testCountThreeSpecies()
-# testSpeciesShareOfPopulation()
-# testGetMaximumTraits()
-# testGetMinimumTraits()
-# testGetAverageTraits()
+testFileLoader()
+testCountThreeSpecies()
+testSpeciesShareOfPopulation()
+testGetMaximumTraits()
+testGetMinimumTraits()
+testGetAverageTraits()
 testGetMedianTraits()
+testFindQuartilesOfList()
+testGetQuartilesTraits()
