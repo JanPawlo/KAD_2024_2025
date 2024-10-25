@@ -10,6 +10,40 @@ Created on Wed Oct 23 08:59:25 2024
 import matplotlib.pyplot as plt
 
 
+def main():
+    data = fileLoader("data1.csv")
+    sampleSize = getSampleSize(data)
+    
+    speciesCount = countThreeSpecies(data)
+    share = speciesShareOfPopulation(speciesCount)
+    
+    minimumTraits = getMinimumTraits(data)
+    maximumTraits = getMaximumTraits(data)
+    
+    averageTraits = getAverageTraits(data)
+    quartilesTraits = getQuartilesTraits(data)
+    
+    print("1. | Rozmiar probki. : ", sampleSize)
+    print("2. | Podzial na gatunki (udzial procentowy)",
+          "\n 2a. Setosa: ", speciesCount["setosa"], "(", round(share["setosa"]*100, 1), "%)",
+          "\n 2b. Versicolor: ", speciesCount["versicolor"], "(", round(share["versicolor"]*100, 1), "%)",
+          "\n 2c. Virginica: ", speciesCount["virginica"], "(", round(share["virginica"]*100, 1), "%)", sep="")
+    print("________________\n")
+    
+    
+    traitNames = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
+    titles = ["Dlugosc dzialki kielicha", "Szerokosc dzialki kielicha", "Dlugosc platka", "Szerokosc platka"]
+    
+    for i in range(4):
+        print("3.",i+1," | ", titles[i], ":\n", 
+              " 3a. Minimum: ", minimumTraits[traitNames[i]], "\n"
+              " 3b. Sr. Aryt: ", round(averageTraits[traitNames[i]], 2), "\n" #dodac odchylenie
+              " 3c. Mediana(Q1, Q3): ", quartilesTraits[traitNames[i]][1], "(",
+              quartilesTraits[traitNames[i]][0], " - ", quartilesTraits[traitNames[i]][2], ")", "\n",
+              " 3d. Maksimum: ", maximumTraits[traitNames[i]], sep="")    
+    
+    
+
 # Opens a .csv file, reads lines from it and saves it into an array as float values
 # @path - relative file path to the data
 # returns - two dimensional array of float values
@@ -57,7 +91,7 @@ def countThreeSpecies(data):
 # Finds ammount of flowers in dataset, each row is a single flower.
 # @data parameter - float [x][y]
 # returns int flower ammount
-def totalPopulation(data):
+def getSampleSize(data):
     return len(data)
 
 
@@ -151,7 +185,7 @@ def getAverageTraits(data):
         }
     
     
-    totPop = totalPopulation(data)
+    totPop = getSampleSize(data)
     for i in range(len(data)):
         for j in range(4):
             traitSums[traitIndexes[j]] += data[i][j]
@@ -182,7 +216,7 @@ def getMedianTraits(data):
     fourListsOfTraits = []
     for i in range(4):
         fourListsOfTraits.append([])
-        for j in range(totalPopulation(data)):
+        for j in range(getSampleSize(data)):
             fourListsOfTraits[i].append(data[j][i])
         # finds the median
         traitMedians[traitIndexes[i]] = findMedianOfList(fourListsOfTraits[i])
@@ -257,7 +291,7 @@ def getQuartilesTraits(data):
     fourListsOfTraits = []
     for i in range(4):
         fourListsOfTraits.append([])
-        for j in range(totalPopulation(data)):
+        for j in range(getSampleSize(data)):
             fourListsOfTraits[i].append(data[j][i])
         # finds the median
         traitQuartiles[traitIndexes[i]] = findQuartilesOfList(fourListsOfTraits[i])
@@ -373,12 +407,13 @@ def testFileLoader():
     print()
     
 
-testFileLoader()
-testCountThreeSpecies()
-testSpeciesShareOfPopulation()
-testGetMaximumTraits()
-testGetMinimumTraits()
-testGetAverageTraits()
-testGetMedianTraits()
-testFindQuartilesOfList()
-testGetQuartilesTraits()
+# testFileLoader()
+# testCountThreeSpecies()
+# testSpeciesShareOfPopulation()
+# testGetMaximumTraits()
+# testGetMinimumTraits()
+# testGetAverageTraits()
+# testGetMedianTraits()
+# testFindQuartilesOfList()
+# testGetQuartilesTraits()
+main()
