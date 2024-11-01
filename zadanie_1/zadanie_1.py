@@ -296,6 +296,33 @@ def getStandardDeviationTraits(data):
     
     return traitDeviations
 
+def GenerateHistogram(data, trait, bins):
+    
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    traitTable = []
+    for i in range(len(data)):
+        traitTable.append(data[i][traitIndexes[trait]])
+      
+    plt.hist(traitTable, bins, edgecolor='black')
+    
+    '''
+    In main:
+        
+    plt.title()
+    plt.xlabel()
+    plt.ylabel()
+    plt.show()
+    '''
+
+
+# -------TESTS--------
+
 def testFindQuartilesOfList():
     entryList1 = [0, 2, 3, 4, 5, 5, 6, 7]
     entryList2 = [0, 2, 3, 4, 5, 5, 6]
@@ -418,7 +445,7 @@ def testGetStandardDeviationTraits():
     
     print()
     
-    
+
     
 
 testFileLoader()

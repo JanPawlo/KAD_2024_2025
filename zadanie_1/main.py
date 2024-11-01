@@ -6,7 +6,9 @@ Created on Thu Oct 31 17:17:31 2024
 @author: Emil Franczak
 """
 
-from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits
+
+import matplotlib.pyplot as plt
+from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits, getStandardDeviationTraits, GenerateHistogram
 
 def main():
     print("---- Zadanie 1 ----")
@@ -37,14 +39,21 @@ def main():
     average = getAverageTraits(data)
     median = getMedianTraits(data)
     quartiles = getQuartilesTraits(data)
+    deviation = getStandardDeviationTraits(data)
     
-    print("Długość działki kielicha (cm);" + str(round(minimum["sepal_length"], 2)) + ";" + str(round(average["sepal_length"], 2)) + "(+-TBD);" + str(round(median["sepal_length"], 2)) + "(" + str(round(quartiles["sepal_length"][0], 2)) + " - " + str(round(quartiles["sepal_length"][2], 2)) + ");" + str(round(maximum["sepal_length"], 2)))
-    print("Szerokość działki kielicha (cm);" + str(round(minimum["sepal_width"], 2)) + ";" + str(round(average["sepal_width"], 2)) + "(+-TBD);" + str(round(median["sepal_width"], 2)) + "(" + str(round(quartiles["sepal_width"][0], 2)) + " - " + str(round(quartiles["sepal_width"][2], 2)) + ");" + str(round(maximum["sepal_width"], 2)))
-    print("Długość płatka (cm);" + str(round(minimum["petal_length"], 2)) + ";" + str(round(average["petal_length"], 2)) + "(+-TBD);" + str(round(median["petal_length"], 2)) + "(" + str(round(quartiles["petal_length"][0], 2)) + " - " + str(round(quartiles["petal_length"][2], 2)) + ");" + str(round(maximum["petal_length"], 2)))
-    print("Szerokość płatka (cm));" + str(round(minimum["petal_width"], 2)) + ";" + str(round(average["petal_width"], 2)) + "(+-TBD);" + str(round(median["petal_width"], 2)) + "(" + str(round(quartiles["petal_width"][0], 2)) + " - " + str(round(quartiles["petal_width"][2], 2)) + ");" + str(round(maximum["petal_width"], 2)))
+    print("Długość działki kielicha (cm);" + str(round(minimum["sepal_length"], 2)) + ";" + str(round(average["sepal_length"], 2)) + "(+-" + str(round(deviation["sepal_length"], 2)) + ");" + str(round(median["sepal_length"], 2)) + "(" + str(round(quartiles["sepal_length"][0], 2)) + " - " + str(round(quartiles["sepal_length"][2], 2)) + ");" + str(round(maximum["sepal_length"], 2)))
+    print("Szerokość działki kielicha (cm);" + str(round(minimum["sepal_width"], 2)) + ";" + str(round(average["sepal_width"], 2)) + "(+-" + str(round(deviation["sepal_width"], 2)) + ");" + str(round(median["sepal_width"], 2)) + "(" + str(round(quartiles["sepal_width"][0], 2)) + " - " + str(round(quartiles["sepal_width"][2], 2)) + ");" + str(round(maximum["sepal_width"], 2)))
+    print("Długość płatka (cm);" + str(round(minimum["petal_length"], 2)) + ";" + str(round(average["petal_length"], 2)) + "(+-" + str(round(deviation["petal_length"], 2)) + ");" + str(round(median["petal_length"], 2)) + "(" + str(round(quartiles["petal_length"][0], 2)) + " - " + str(round(quartiles["petal_length"][2], 2)) + ");" + str(round(maximum["petal_length"], 2)))
+    print("Szerokość płatka (cm));" + str(round(minimum["petal_width"], 2)) + ";" + str(round(average["petal_width"], 2)) + "(+-" + str(round(deviation["petal_width"], 2)) + ");" + str(round(median["petal_width"], 2)) + "(" + str(round(quartiles["petal_width"][0], 2)) + " - " + str(round(quartiles["petal_width"][2], 2)) + ");" + str(round(maximum["petal_width"], 2)))
 
+    GenerateHistogram(fileLoader("data1.csv"), "sepal_length", [4.0,4.5,5,5.5,6,6.5,7,7.5,8]  )
+    plt.title("Długość działki kielicha")
+    plt.xlabel("Długość (cm)")
+    plt.ylabel("Liczebność")
+    plt.show()
     
-    
+
+
     
 
     
