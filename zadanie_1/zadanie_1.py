@@ -408,10 +408,13 @@ def testFileLoader():
 def testGetStandardDeviationTraits():
     print("Test Standard Deviation Traits")
     
-    data = fileLoader("data1.csv")
+    data = fileLoader("test_data1.csv")
     deviationDict = getStandardDeviationTraits(data)
     
-    #TEST TBD
+    print(round(deviationDict["sepal_length"], 2) == 0.28)
+    print(round(deviationDict["sepal_width"], 2) == 0.29)
+    print(round(deviationDict["petal_length"], 2) == 0.1)
+    print(round(deviationDict["petal_width"], 2) == 0.07)
     
     print()
     
