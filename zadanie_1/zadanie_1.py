@@ -8,6 +8,7 @@ Created on Wed Oct 23 08:59:25 2024
 
 
 import matplotlib.pyplot as plt
+import math
 
 
 # Opens a .csv file, reads lines from it and saves it into an array as float values
@@ -263,6 +264,38 @@ def getQuartilesTraits(data):
         traitQuartiles[traitIndexes[i]] = findQuartilesOfList(fourListsOfTraits[i])
     return traitQuartiles
 
+#Calculates Standard Deviation
+#@data parameter - unsorted list
+#returns dictionary with standard deviation for each trait
+def getStandardDeviationTraits(data):
+    
+    traitIndexes = {
+        0 : "sepal_length",
+        1 : "sepal_width",
+        2 : "petal_length",
+        3 : "petal_width"        
+        }
+    
+    traitDeviations = {
+        "sepal_length" : 0, 
+        "sepal_width" : 0,
+        "petal_length" : 0,
+        "petal_width" : 0,
+        }
+    
+    averageDict = getAverageTraits(data)
+    
+    # Calculate the sum of squared deviations for each trait across the population    
+    for i in range(totalPopulation(data)):
+        for j in range(len(traitIndexes)):
+            traitDeviations[traitIndexes[j]] += (data[i][j] - averageDict[traitIndexes[j]])**2
+    
+    # Calculate standard deviation for each trait
+    for j in range(len(traitIndexes)):
+        traitDeviations[traitIndexes[j]] = math.sqrt(traitDeviations[traitIndexes[j]]/totalPopulation(data))
+    
+    return traitDeviations
+
 def testFindQuartilesOfList():
     entryList1 = [0, 2, 3, 4, 5, 5, 6, 7]
     entryList2 = [0, 2, 3, 4, 5, 5, 6]
@@ -372,6 +405,18 @@ def testFileLoader():
     print((len(data) == 150) == True)
     print()
     
+def testGetStandardDeviationTraits():
+    print("Test Standard Deviation Traits")
+    
+    data = fileLoader("data1.csv")
+    deviationDict = getStandardDeviationTraits(data)
+    
+    #TEST TBD
+    
+    print()
+    
+    
+    
 
 testFileLoader()
 testCountThreeSpecies()
@@ -382,3 +427,5 @@ testGetAverageTraits()
 testGetMedianTraits()
 testFindQuartilesOfList()
 testGetQuartilesTraits()
+testGetStandardDeviationTraits()
+
