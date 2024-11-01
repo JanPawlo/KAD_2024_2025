@@ -8,7 +8,7 @@ Created on Thu Oct 31 17:17:31 2024
 
 
 import matplotlib.pyplot as plt
-from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits, getStandardDeviationTraits, GenerateHistogram
+from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits, getStandardDeviationTraits, generateHistogram, generateBoxPlot
 
 def main():
     print("---- Zadanie 1 ----")
@@ -46,10 +46,13 @@ def main():
     print("Długość płatka (cm);" + str(round(minimum["petal_length"], 2)) + ";" + str(round(average["petal_length"], 2)) + "(+-" + str(round(deviation["petal_length"], 2)) + ");" + str(round(median["petal_length"], 2)) + "(" + str(round(quartiles["petal_length"][0], 2)) + " - " + str(round(quartiles["petal_length"][2], 2)) + ");" + str(round(maximum["petal_length"], 2)))
     print("Szerokość płatka (cm));" + str(round(minimum["petal_width"], 2)) + ";" + str(round(average["petal_width"], 2)) + "(+-" + str(round(deviation["petal_width"], 2)) + ");" + str(round(median["petal_width"], 2)) + "(" + str(round(quartiles["petal_width"][0], 2)) + " - " + str(round(quartiles["petal_width"][2], 2)) + ");" + str(round(maximum["petal_width"], 2)))
 
-    GenerateHistogram(fileLoader("data1.csv"), "sepal_length", [4.0,4.5,5,5.5,6,6.5,7,7.5,8]  )
-    plt.title("Długość działki kielicha")
-    plt.xlabel("Długość (cm)")
-    plt.ylabel("Liczebność")
+    
+    figure, axis = plt.subplots(1, 2, figsize=(15, 6)) # rows, columns
+    
+    axis[0].set_title("Długość działki kielicha")
+    generateHistogram(data, "sepal_length", [4.0,4.5,5,5.5,6,6.5,7,7.5,8], axis[0])
+    generateBoxPlot(data, "sepal_length", axis[1])
+    
     plt.show()
     
 

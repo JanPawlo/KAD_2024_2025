@@ -296,7 +296,7 @@ def getStandardDeviationTraits(data):
     
     return traitDeviations
 
-def GenerateHistogram(data, trait, bins):
+def generateHistogram(data, trait, bins, axis):
     
     traitIndexes = {
         "sepal_length" : 0,
@@ -309,17 +309,50 @@ def GenerateHistogram(data, trait, bins):
     for i in range(len(data)):
         traitTable.append(data[i][traitIndexes[trait]])
       
-    plt.hist(traitTable, bins, edgecolor='black')
+    axis.hist(traitTable, bins, edgecolor='black')
+    axis.set_xlabel("Długość (cm)")
+    axis.set_ylabel("Liczebność")
     
     '''
     In main:
         
     plt.title()
-    plt.xlabel()
-    plt.ylabel()
     plt.show()
     '''
 
+
+#Generates a matplotlib box plot
+#@data parameter - unsorted list
+#@trait parameter - one of four traits
+def generateBoxPlot(data, trait, axis):
+    
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    
+    #sorting data by species
+    speciesCount = [[],[],[]]
+    
+    for i in range(len(data)):
+        speciesCount[int(data[i][4])].append(data[i][traitIndexes[trait]])
+    
+    
+    
+    axis.boxplot(speciesCount)
+    axis.set_xticks([1, 2, 3], ["setosa", "versicolor", "virginica"])
+    axis.set_xlabel("Gatunek")
+    axis.set_ylabel("Długość (cm)")
+    '''
+    In main:
+    
+    plt.yticks()
+    plt.title()
+    plt.show()
+    '''
 
 # -------TESTS--------
 
@@ -458,4 +491,5 @@ testGetMedianTraits()
 testFindQuartilesOfList()
 testGetQuartilesTraits()
 testGetStandardDeviationTraits()
+
 
