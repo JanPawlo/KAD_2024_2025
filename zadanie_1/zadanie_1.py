@@ -308,7 +308,8 @@ def generateHistogram(data, trait, bins, axis):
     traitTable = []
     for i in range(len(data)):
         traitTable.append(data[i][traitIndexes[trait]])
-      
+    
+
     axis.hist(traitTable, bins, edgecolor='black')
     axis.set_xlabel("Długość (cm)")
     axis.set_ylabel("Liczebność")

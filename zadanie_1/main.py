@@ -47,11 +47,24 @@ def main():
     print("Szerokość płatka (cm));" + str(round(minimum["petal_width"], 2)) + ";" + str(round(average["petal_width"], 2)) + "(+-" + str(round(deviation["petal_width"], 2)) + ");" + str(round(median["petal_width"], 2)) + "(" + str(round(quartiles["petal_width"][0], 2)) + " - " + str(round(quartiles["petal_width"][2], 2)) + ");" + str(round(maximum["petal_width"], 2)))
 
     
-    figure, axis = plt.subplots(1, 2, figsize=(15, 6)) # rows, columns
+    figure, axis = plt.subplots(4, 2, figsize=(12, 12)) # rows, columns
+    figure.tight_layout(pad=4.0) # adjusting padding between plots
     
-    axis[0].set_title("Długość działki kielicha")
-    generateHistogram(data, "sepal_length", [4.0,4.5,5,5.5,6,6.5,7,7.5,8], axis[0])
-    generateBoxPlot(data, "sepal_length", axis[1])
+    axis[0][0].set_title("Długość działki kielicha")
+    generateHistogram(data, "sepal_length", [4.0,4.5,5,5.5,6,6.5,7,7.5,8], axis[0][0])
+    generateBoxPlot(data, "sepal_length", axis[0][1])
+    
+    axis[1][0].set_title("Szerokość działki kielicha")
+    generateHistogram(data, "sepal_width", [1.0,1.5,2,2.5,3,3.5,4,4.5,5], axis[1][0])
+    generateBoxPlot(data, "sepal_width", axis[1][1])
+    
+    axis[2][0].set_title("Długość płatka")
+    generateHistogram(data, "petal_length", 12, axis[2][0])
+    generateBoxPlot(data, "petal_length", axis[2][1])
+    
+    axis[3][0].set_title("Szerokość płatka")
+    generateHistogram(data, "petal_width", 12, axis[3][0])
+    generateBoxPlot(data, "petal_width", axis[3][1])
     
     plt.show()
     
