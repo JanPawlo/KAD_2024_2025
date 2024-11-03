@@ -355,6 +355,50 @@ def generateBoxPlot(data, trait, axis):
     plt.show()
     '''
 
+def getPearsonsCorrelation(data, trait_x, trait_y):
+    
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    average_x = getAverageTraits(data)[trait_x]
+    average_y = getAverageTraits(data)[trait_y]
+    
+    deviation_x = getStandardDeviationTraits(data)[trait_x]
+    deviation_y = getStandardDeviationTraits(data)[trait_y]
+    
+    covariance_xy = 0
+    
+    for i in data:
+        covariance_xy += (i[traitIndexes[trait_x]] - average_x) * (i[traitIndexes[trait_y]] - average_y)
+    
+    
+    return (covariance_xy / (len(data)*(deviation_x*deviation_y)))
+        
+        
+    
+
+def generateScatterPlot(data, trait_x, trait_y, axis):
+    
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    x = []
+    y = []
+    
+    for i in range(len(data)):
+        x.append(data[i][traitIndexes[trait_x]])
+        y.append(data[i][traitIndexes[trait_y]])
+    
+    axis.scatter(x, y)
+
 # -------TESTS--------
 
 def testFindQuartilesOfList():
@@ -479,6 +523,15 @@ def testGetStandardDeviationTraits():
     
     print()
     
+def testGetPearsonsCorrelation():
+    print("Test Pearsons Correlation")
+    
+    data = fileLoader("test_data1.csv")
+    
+    print(round(getPearsonsCorrelation(data, "sepal_length", "sepal_width"), 2) == 0.79)
+    print(round(getPearsonsCorrelation(data, "sepal_width", "petal_length"), 2) == 0.52)
+    print(round(getPearsonsCorrelation(data, "petal_length", "petal_width"), 2) == 0.52)
+
 
     
 
@@ -492,5 +545,6 @@ testGetMedianTraits()
 testFindQuartilesOfList()
 testGetQuartilesTraits()
 testGetStandardDeviationTraits()
+testGetPearsonsCorrelation()
 
 

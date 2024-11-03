@@ -8,7 +8,7 @@ Created on Thu Oct 31 17:17:31 2024
 
 
 import matplotlib.pyplot as plt
-from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits, getStandardDeviationTraits, generateHistogram, generateBoxPlot
+from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits, getStandardDeviationTraits, generateHistogram, generateBoxPlot, generateScatterPlot, getPearsonsCorrelation
 
 def main():
     print("---- Zadanie 1 ----")
@@ -65,6 +65,16 @@ def main():
     axis[3][0].set_title("Szerokość płatka")
     generateHistogram(data, "petal_width", 12, axis[3][0])
     generateBoxPlot(data, "petal_width", axis[3][1])
+    
+    plt.show()
+    
+    
+    figure, axis = plt.subplots(4, 2, figsize=(10, 12)) # rows, columns
+    figure.tight_layout(pad=4.0) # adjusting padding between plots
+
+    title = "r =", str(round(getPearsonsCorrelation(data, "sepal_length", "sepal_width"), 2)) + "; y ="
+    axis[0][0].set_title(title)
+    generateScatterPlot(data, "sepal_length", "sepal_width", axis[0][0])
     
     plt.show()
     
