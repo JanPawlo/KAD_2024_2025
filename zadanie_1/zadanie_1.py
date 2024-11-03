@@ -8,6 +8,7 @@ Created on Wed Oct 23 08:59:25 2024
 
 
 import matplotlib.pyplot as plt
+import math
 
 
 def main():
@@ -297,6 +298,143 @@ def getQuartilesTraits(data):
         traitQuartiles[traitIndexes[i]] = findQuartilesOfList(fourListsOfTraits[i])
     return traitQuartiles
 
+#Calculates Standard Deviation
+#@data parameter - unsorted list
+#returns dictionary with standard deviation for each trait
+def getStandardDeviationTraits(data):
+    
+    traitIndexes = {
+        0 : "sepal_length",
+        1 : "sepal_width",
+        2 : "petal_length",
+        3 : "petal_width"        
+        }
+    
+    traitDeviations = {
+        "sepal_length" : 0, 
+        "sepal_width" : 0,
+        "petal_length" : 0,
+        "petal_width" : 0,
+        }
+    
+    averageDict = getAverageTraits(data)
+    
+    # Calculate the sum of squared deviations for each trait across the population    
+    for i in range(totalPopulation(data)):
+        for j in range(len(traitIndexes)):
+            traitDeviations[traitIndexes[j]] += (data[i][j] - averageDict[traitIndexes[j]])**2
+    
+    # Calculate standard deviation for each trait
+    for j in range(len(traitIndexes)):
+        traitDeviations[traitIndexes[j]] = math.sqrt(traitDeviations[traitIndexes[j]]/totalPopulation(data))
+    
+    return traitDeviations
+
+def generateHistogram(data, trait, bins, axis):
+    
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    traitTable = []
+    for i in range(len(data)):
+        traitTable.append(data[i][traitIndexes[trait]])
+    
+
+    axis.hist(traitTable, bins, edgecolor='black')
+    axis.set_xlabel("Długość (cm)")
+    axis.set_ylabel("Liczebność")
+    
+    '''
+    In main:
+        
+    plt.title()
+    plt.show()
+    '''
+
+
+#Generates a matplotlib box plot
+#@data parameter - unsorted list
+#@trait parameter - one of four traits
+def generateBoxPlot(data, trait, axis):
+    
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    
+    #sorting data by species
+    speciesCount = [[],[],[]]
+    
+    for i in range(len(data)):
+        speciesCount[int(data[i][4])].append(data[i][traitIndexes[trait]])
+    
+    
+    
+    axis.boxplot(speciesCount)
+    axis.set_xticks([1, 2, 3], ["setosa", "versicolor", "virginica"])
+    axis.set_xlabel("Gatunek")
+    axis.set_ylabel("Długość (cm)")
+    '''
+    In main:
+    
+    plt.yticks()
+    plt.title()
+    plt.show()
+    '''
+
+def getPearsonsCorrelation(data, trait_x, trait_y):
+    
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    average_x = getAverageTraits(data)[trait_x]
+    average_y = getAverageTraits(data)[trait_y]
+    
+    deviation_x = getStandardDeviationTraits(data)[trait_x]
+    deviation_y = getStandardDeviationTraits(data)[trait_y]
+    
+    covariance_xy = 0
+    
+    for i in data:
+        covariance_xy += (i[traitIndexes[trait_x]] - average_x) * (i[traitIndexes[trait_y]] - average_y)
+    
+    
+    return (covariance_xy / (len(data)*(deviation_x*deviation_y)))
+        
+        
+    
+
+def generateScatterPlot(data, trait_x, trait_y, axis):
+    
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    x = []
+    y = []
+    
+    for i in range(len(data)):
+        x.append(data[i][traitIndexes[trait_x]])
+        y.append(data[i][traitIndexes[trait_y]])
+    
+    axis.scatter(x, y)
+
+# -------TESTS--------
+
 def testFindQuartilesOfList():
     entryList1 = [0, 2, 3, 4, 5, 5, 6, 7]
     entryList2 = [0, 2, 3, 4, 5, 5, 6]
@@ -406,7 +544,32 @@ def testFileLoader():
     print((len(data) == 150) == True)
     print()
     
+def testGetStandardDeviationTraits():
+    print("Test Standard Deviation Traits")
+    
+    data = fileLoader("test_data1.csv")
+    deviationDict = getStandardDeviationTraits(data)
+    
+    print(round(deviationDict["sepal_length"], 2) == 0.28)
+    print(round(deviationDict["sepal_width"], 2) == 0.29)
+    print(round(deviationDict["petal_length"], 2) == 0.1)
+    print(round(deviationDict["petal_width"], 2) == 0.07)
+    
+    print()
+    
+def testGetPearsonsCorrelation():
+    print("Test Pearsons Correlation")
+    
+    data = fileLoader("test_data1.csv")
+    
+    print(round(getPearsonsCorrelation(data, "sepal_length", "sepal_width"), 2) == 0.79)
+    print(round(getPearsonsCorrelation(data, "sepal_width", "petal_length"), 2) == 0.52)
+    print(round(getPearsonsCorrelation(data, "petal_length", "petal_width"), 2) == 0.52)
 
+
+    
+
+<<<<<<< HEAD
 # testFileLoader()
 # testCountThreeSpecies()
 # testSpeciesShareOfPopulation()
@@ -417,3 +580,18 @@ def testFileLoader():
 # testFindQuartilesOfList()
 # testGetQuartilesTraits()
 main()
+=======
+testFileLoader()
+testCountThreeSpecies()
+testSpeciesShareOfPopulation()
+testGetMaximumTraits()
+testGetMinimumTraits()
+testGetAverageTraits()
+testGetMedianTraits()
+testFindQuartilesOfList()
+testGetQuartilesTraits()
+testGetStandardDeviationTraits()
+testGetPearsonsCorrelation()
+
+
+>>>>>>> 21f655db300d19549a1bd96a03405e2754f30a34
