@@ -11,39 +11,6 @@ import matplotlib.pyplot as plt
 import math
 
 
-def main():
-    data = fileLoader("data1.csv")
-    sampleSize = getSampleSize(data)
-    
-    speciesCount = countThreeSpecies(data)
-    share = speciesShareOfPopulation(speciesCount)
-    
-    minimumTraits = getMinimumTraits(data)
-    maximumTraits = getMaximumTraits(data)
-    
-    averageTraits = getAverageTraits(data)
-    quartilesTraits = getQuartilesTraits(data)
-    
-    print("1. | Rozmiar probki. : ", sampleSize)
-    print("2. | Podzial na gatunki (udzial procentowy)",
-          "\n 2a. Setosa: ", speciesCount["setosa"], "(", round(share["setosa"]*100, 1), "%)",
-          "\n 2b. Versicolor: ", speciesCount["versicolor"], "(", round(share["versicolor"]*100, 1), "%)",
-          "\n 2c. Virginica: ", speciesCount["virginica"], "(", round(share["virginica"]*100, 1), "%)", sep="")
-    print("________________\n")
-    
-    
-    traitNames = ["sepal_length", "sepal_width", "petal_length", "petal_width"]
-    titles = ["Dlugosc dzialki kielicha", "Szerokosc dzialki kielicha", "Dlugosc platka", "Szerokosc platka"]
-    
-    for i in range(4):
-        print("3.",i+1," | ", titles[i], ":\n", 
-              " 3a. Minimum: ", minimumTraits[traitNames[i]], "\n"
-              " 3b. Sr. Aryt: ", round(averageTraits[traitNames[i]], 2), "\n" #dodac odchylenie
-              " 3c. Mediana(Q1, Q3): ", quartilesTraits[traitNames[i]][1], "(",
-              quartilesTraits[traitNames[i]][0], " - ", quartilesTraits[traitNames[i]][2], ")", "\n",
-              " 3d. Maksimum: ", maximumTraits[traitNames[i]], sep="")    
-    
-    
 
 # Opens a .csv file, reads lines from it and saves it into an array as float values
 # @path - relative file path to the data
@@ -689,22 +656,22 @@ def testGetListOfSingleTrait():
 # testGetMedianTraits()
 # testFindQuartilesOfList()
 # testGetQuartilesTraits()
-main()
-# =======
-testFileLoader()
-testCountThreeSpecies()
-testSpeciesShareOfPopulation()
-testGetMaximumTraits()
-testGetMinimumTraits()
-testGetAverageTraits()
-testGetMedianTraits()
-testFindQuartilesOfList()
-testGetQuartilesTraits()
-testGetStandardDeviationTraits()
-testGetPearsonsCorrelation()
 
-testGetCovariation()
-testGetLinearRegression()
+# # =======
+# testFileLoader()
+# testCountThreeSpecies()
+# testSpeciesShareOfPopulation()
+# testGetMaximumTraits()
+# testGetMinimumTraits()
+# testGetAverageTraits()
+# testGetMedianTraits()
+# testFindQuartilesOfList()
+# testGetQuartilesTraits()
+# testGetStandardDeviationTraits()
+# testGetPearsonsCorrelation()
 
-testGetListOfSingleTrait()
+# testGetCovariation()
+# testGetLinearRegression()
+
+# testGetListOfSingleTrait()
 # >>>>>>> 21f655db300d19549a1bd96a03405e2754f30a34
