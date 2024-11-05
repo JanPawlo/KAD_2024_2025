@@ -8,7 +8,7 @@ Created on Thu Oct 31 17:17:31 2024
 
 
 import matplotlib.pyplot as plt
-from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits, getStandardDeviationTraits, generateHistogram, generateBoxPlot, generateScatterPlot, getPearsonsCorrelation
+from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits, getStandardDeviationTraits, generateHistogram, generateBoxPlot, generateScatterPlot, getPearsonsCorrelation, getOffsetPearson
 
 def main():
     print("---- Zadanie 1 ----")
@@ -47,7 +47,7 @@ def main():
     print("Szerokość płatka (cm));" + str(round(minimum["petal_width"], 2)) + ";" + str(round(average["petal_width"], 2)) + "(+-" + str(round(deviation["petal_width"], 2)) + ");" + str(round(median["petal_width"], 2)) + "(" + str(round(quartiles["petal_width"][0], 2)) + " - " + str(round(quartiles["petal_width"][2], 2)) + ");" + str(round(maximum["petal_width"], 2)))
 
     
-    figure, axis = plt.subplots(4, 2, figsize=(12, 12)) # rows, columns
+    figure, axis = plt.subplots(4, 2, figsize=(12, 16)) # rows, columns
     figure.tight_layout(pad=4.0) # adjusting padding between plots
     
     axis[0][0].set_title("Długość działki kielicha")
@@ -81,9 +81,13 @@ def main():
     axis[0][0].set_ylabel("Szerokosc dzialki kielicha (cm)") #szerokosc dzialki kielicha w 1
     
     
+    # dodanie lini, dosc chaotyczne, daloby sie to ladnie ujac
+    # cos jest nie tak, wynik wychodzi zle, moze gdzies po drodze pomijamy jakies dane? albo zaokragalamy?
+    b = getOffsetPearson(average["sepal_length"], average["sepal_width"], pearsonsCorrelation01)
+    print(pearsonsCorrelation01, b);
     line_x = [minimum["sepal_length"], maximum["sepal_length"]]
-    line_y = [minimum["sepal_length"]*pearsonsCorrelation01, maximum["sepal_length"] * pearsonsCorrelation01]
-    axis[0][0].plot(line_x, line_y)
+    line_y = [minimum["sepal_length"]*pearsonsCorrelation01 + b, maximum["sepal_length"] * pearsonsCorrelation01 + b]
+    axis[0][0].plot(line_x, line_y, color="red")
     
     plt.show()
     

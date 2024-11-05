@@ -410,9 +410,14 @@ def getPearsonsCorrelation(data, trait_x, trait_y):
         covariance_xy += (i[traitIndexes[trait_x]] - average_x) * (i[traitIndexes[trait_y]] - average_y)
     
     
+    
     return (covariance_xy / (len(data)*(deviation_x*deviation_y)))
         
-
+def getOffsetPearson(averageTraitX:float, averageTraitY:float, pearsonsCorrelation:float) -> float:
+    if averageTraitX:
+        print("Srednie X = 0 !!!")
+    return averageTraitY - (pearsonsCorrelation * averageTraitX)
+    
     
 
 def generateScatterPlot(data, trait_x, trait_y, axis):
@@ -568,8 +573,21 @@ def testGetPearsonsCorrelation():
     print(round(getPearsonsCorrelation(data, "sepal_width", "petal_length"), 2) == 0.52)
     print(round(getPearsonsCorrelation(data, "petal_length", "petal_width"), 2) == 0.52)
 
+    print()
 
+
+def testGetOffsetPearson():
+    print("Test Offest Calculation")
+    # X = [1, 2, 3, 4, 5]
+    averageX = 3.0
+    # Y = [1, 2, 3, 4, 5]
+    averageY = 3.0
+    pCorrel = 1.0
     
+    print(getOffsetPearson(averageX, averageY, pCorrel) == 0.0)
+    print(getOffsetPearson(averageX, averageY+1, pCorrel) == 1.0)
+    
+    print()
 
 # <<<<<<< HEAD
 # testFileLoader()
@@ -594,6 +612,6 @@ testFindQuartilesOfList()
 testGetQuartilesTraits()
 testGetStandardDeviationTraits()
 testGetPearsonsCorrelation()
-
+testGetOffsetPearson()
 
 # >>>>>>> 21f655db300d19549a1bd96a03405e2754f30a34
