@@ -8,7 +8,11 @@ Created on Thu Oct 31 17:17:31 2024
 
 
 import matplotlib.pyplot as plt
-from zadanie_1 import fileLoader, countThreeSpecies, speciesShareOfPopulation, getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits, getQuartilesTraits, getStandardDeviationTraits, generateHistogram, generateBoxPlot, generateScatterPlot, getPearsonsCorrelation, getOffsetPearson
+from zadanie_1 import (fileLoader, countThreeSpecies, speciesShareOfPopulation,
+                        getMinimumTraits, getAverageTraits, getMedianTraits, getMaximumTraits,
+                        getQuartilesTraits, getStandardDeviationTraits, generateHistogram,
+                        generateBoxPlot, generateScatterPlot, getPearsonsCorrelation,
+                        getLinearRegression, getListOfSingleTrait, generateLinearRegressionPlot)
 
 def main():
     print("---- Zadanie 1 ----")
@@ -73,23 +77,25 @@ def main():
     figure.tight_layout(pad=4.0) # adjusting padding between plots
 
 
-    pearsonsCorrelation01 = getPearsonsCorrelation(data, "sepal_length", "sepal_width")
-    b = getOffsetPearson(average["sepal_length"], average["sepal_width"], pearsonsCorrelation01)
+    sepal_length_list = getListOfSingleTrait("sepal_length", data)
+    sepal_width_list = getListOfSingleTrait("sepal_width", data)
+    petal_length_list = getListOfSingleTrait("petal_length", data)
+    petal_width_list = getListOfSingleTrait("petal_width", data)
     
-    title = "r =" + str(round(pearsonsCorrelation01, 2)) + "; y = ??? + " + str(round(b, 1))
+    
+    pearsonsCorrelation01 = getPearsonsCorrelation(data, "sepal_length", "sepal_width")
+    
+    a, b = getLinearRegression(sepal_length_list, sepal_width_list)
+    
+    title = "r =" + str(round(pearsonsCorrelation01, 2)) + "; y = "+ str(round(a, 1)) + " + " + str(round(b, 1))
     axis[0][0].set_title(title)
     generateScatterPlot(data, "sepal_length", "sepal_width", axis[0][0])
     axis[0][0].set_xlabel("Dlugosc dzialki kielicha (cm)") # Dlugosc dzialki kielicha w 1
     axis[0][0].set_ylabel("Szerokosc dzialki kielicha (cm)") #szerokosc dzialki kielicha w 1
     
     
-    # dodanie lini, dosc chaotyczne, daloby sie to ladnie ujac
-    # cos jest nie tak, wynik wychodzi zle, moze gdzies po drodze pomijamy jakies dane? albo zaokragalamy?
-    
-    
-    line_x = [minimum["sepal_length"], maximum["sepal_length"]]
-    line_y = [minimum["sepal_length"]*pearsonsCorrelation01 + b, maximum["sepal_length"] * pearsonsCorrelation01 + b]
-    axis[0][0].plot(line_x, line_y, color="red")
+    generateLinearRegressionPlot(data, "sepal_length", "sepal_width", axis[0][0])
+
     
     plt.show()
     

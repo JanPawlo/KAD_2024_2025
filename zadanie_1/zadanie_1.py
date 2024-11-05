@@ -433,6 +433,20 @@ def generateScatterPlot(data, trait_x, trait_y, axis):
     
     axis.scatter(x, y)
 
+def generateLinearRegressionPlot(data, trait_x:str, trait_y:str, axis):
+    
+    minimum = getMinimumTraits(data)
+    maximum = getMaximumTraits(data)
+
+    list_X = getListOfSingleTrait(trait_x, data)
+    list_Y = getListOfSingleTrait(trait_y, data)
+    
+    a, b = getLinearRegression(list_X, list_Y)
+    
+    line_x = [minimum["sepal_length"], maximum["sepal_length"]]
+    line_y = [minimum["sepal_length"]*a + b, maximum["sepal_length"] *a + b]
+    axis.plot(line_x, line_y, color="red")
+
 def arithAverage(lista:list) ->float:
     suma = 0;
     for i in range(len(lista)):
@@ -476,9 +490,27 @@ def getLinearRegression(list_X:list, list_Y:list) -> (float ,float): # (a, b) fr
     avr_X = arithAverage(list_X)
     avr_Y = arithAverage(list_Y)
 
-    a = var_X / covar_XY
+    a = covar_XY / var_X
     b = avr_Y - (a*avr_X)
     return (a, b)
+
+
+def getListOfSingleTrait(traitname:str, data) -> list:
+    traitIndexes = {
+        "sepal_length" : 0,
+        "sepal_width" : 1,
+        "petal_length": 2,
+        "petal_width": 3        
+        }
+    
+    pickedTrait = traitIndexes[traitname]
+    
+    returnList = []
+    for i in range(len(data)):
+        returnList.append(data[i][pickedTrait])
+    
+    return returnList
+
 
 # -------TESTS--------
 
@@ -608,7 +640,7 @@ def testGetPearsonsCorrelation():
     print("Test Pearsons Correlation")
     
     data = fileLoader("test_data1.csv")
-    
+
     print(round(getPearsonsCorrelation(data, "sepal_length", "sepal_width"), 2) == 0.79)
     print(round(getPearsonsCorrelation(data, "sepal_width", "petal_length"), 2) == 0.52)
     print(round(getPearsonsCorrelation(data, "petal_length", "petal_width"), 2) == 0.52)
@@ -625,6 +657,7 @@ def testGetCovariation():
     print(round(getCovariance(daneX, daneY), 2) == 11.68)
     print(round(getCovariance(daneX, daneZ), 2) == -2.52)
     
+    print()
     
 def testGetLinearRegression():
     print("Test Linear Regression")
@@ -635,12 +668,17 @@ def testGetLinearRegression():
     print(round(getLinearRegression(daneX, daneY)[0], 2) == 1.0)
     print(round(getLinearRegression(daneX, daneY)[1], 2) == 0.0)
     
-    print(getLinearRegression(daneX, daneZ))
     print(round(getLinearRegression(daneX, daneZ)[0], 2) == 2.0)
     print(round(getLinearRegression(daneX, daneZ)[1], 2) == 0.0)
     
     print()
+
+def testGetListOfSingleTrait():
+    print("Test Get List of Single Traits")
     
+    data = fileLoader("test_data1.csv")
+    print(getListOfSingleTrait("sepal_length", data) == [5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9])
+
 # <<<<<<< HEAD
 # testFileLoader()
 # testCountThreeSpecies()
@@ -667,4 +705,6 @@ testGetPearsonsCorrelation()
 
 testGetCovariation()
 testGetLinearRegression()
+
+testGetListOfSingleTrait()
 # >>>>>>> 21f655db300d19549a1bd96a03405e2754f30a34
