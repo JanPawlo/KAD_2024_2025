@@ -320,13 +320,13 @@ def getStandardDeviationTraits(data):
     averageDict = getAverageTraits(data)
     
     # Calculate the sum of squared deviations for each trait across the population    
-    for i in range(totalPopulation(data)):
+    for i in range(len(data)):
         for j in range(len(traitIndexes)):
             traitDeviations[traitIndexes[j]] += (data[i][j] - averageDict[traitIndexes[j]])**2
     
     # Calculate standard deviation for each trait
     for j in range(len(traitIndexes)):
-        traitDeviations[traitIndexes[j]] = math.sqrt(traitDeviations[traitIndexes[j]]/totalPopulation(data))
+        traitDeviations[traitIndexes[j]] = math.sqrt(traitDeviations[traitIndexes[j]]/len(data))
     
     return traitDeviations
 
@@ -412,7 +412,7 @@ def getPearsonsCorrelation(data, trait_x, trait_y):
     
     return (covariance_xy / (len(data)*(deviation_x*deviation_y)))
         
-        
+
     
 
 def generateScatterPlot(data, trait_x, trait_y, axis):
@@ -431,7 +431,9 @@ def generateScatterPlot(data, trait_x, trait_y, axis):
         x.append(data[i][traitIndexes[trait_x]])
         y.append(data[i][traitIndexes[trait_y]])
     
+    
     axis.scatter(x, y)
+
 
 # -------TESTS--------
 
@@ -569,7 +571,7 @@ def testGetPearsonsCorrelation():
 
     
 
-<<<<<<< HEAD
+# <<<<<<< HEAD
 # testFileLoader()
 # testCountThreeSpecies()
 # testSpeciesShareOfPopulation()
@@ -580,7 +582,7 @@ def testGetPearsonsCorrelation():
 # testFindQuartilesOfList()
 # testGetQuartilesTraits()
 main()
-=======
+# =======
 testFileLoader()
 testCountThreeSpecies()
 testSpeciesShareOfPopulation()
@@ -594,4 +596,4 @@ testGetStandardDeviationTraits()
 testGetPearsonsCorrelation()
 
 
->>>>>>> 21f655db300d19549a1bd96a03405e2754f30a34
+# >>>>>>> 21f655db300d19549a1bd96a03405e2754f30a34

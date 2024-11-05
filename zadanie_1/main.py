@@ -72,9 +72,18 @@ def main():
     figure, axis = plt.subplots(4, 2, figsize=(10, 12)) # rows, columns
     figure.tight_layout(pad=4.0) # adjusting padding between plots
 
-    title = "r =", str(round(getPearsonsCorrelation(data, "sepal_length", "sepal_width"), 2)) + "; y ="
+
+    pearsonsCorrelation01 = getPearsonsCorrelation(data, "sepal_length", "sepal_width")
+    title = "r =", str(round(pearsonsCorrelation01, 2)) + "; y ="
     axis[0][0].set_title(title)
     generateScatterPlot(data, "sepal_length", "sepal_width", axis[0][0])
+    axis[0][0].set_xlabel("Dlugosc dzialki kielicha (cm)") # Dlugosc dzialki kielicha w 1
+    axis[0][0].set_ylabel("Szerokosc dzialki kielicha (cm)") #szerokosc dzialki kielicha w 1
+    
+    
+    line_x = [minimum["sepal_length"], maximum["sepal_length"]]
+    line_y = [minimum["sepal_length"]*pearsonsCorrelation01, maximum["sepal_length"] * pearsonsCorrelation01]
+    axis[0][0].plot(line_x, line_y)
     
     plt.show()
     
