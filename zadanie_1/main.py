@@ -98,22 +98,58 @@ def main():
 
     
 # nastepny wykres
+    a, b = getLinearRegression(sepal_length_list, petal_length_list)
+    title = "r =" + str(round(getPearsonsCorrelation(data, "sepal_length", "petal_length"), 2)) + "; y = "+ str(round(a, 1)) + " + (" + str(round(b, 1)) + ")"
+    axis[0][1].set_title(title)
+    axis[0][1].set_xlabel("Dlugosc dzialki kielicha (cm)") 
+    axis[0][1].set_ylabel("Dlugosc platka (cm)")
+    
+    
     generateScatterPlot(data, "sepal_length", "petal_length", axis[0][1])
     generateLinearRegressionPlot(data, "sepal_length", "petal_length", axis[0][1])
 
 # nastepny wykres
+    a, b = getLinearRegression(sepal_length_list, petal_width_list)
+    title = "r =" + str(round(getPearsonsCorrelation(data, "sepal_length", "petal_width"), 2)) + "; y = "+ str(round(a, 1)) + " + (" + str(round(b, 1)) + ")"
+    axis[1][0].set_title(title)
+    axis[1][0].set_xlabel("Dlugosc dzialki kielicha (cm)") 
+    axis[1][0].set_ylabel("Szerokosc platka (cm)")
+    
+    
     generateScatterPlot(data, "sepal_length", "petal_width", axis[1][0])
     generateLinearRegressionPlot(data, "sepal_length", "petal_width", axis[1][0])
 
 # nastepny wykres
+
+    a, b = getLinearRegression(sepal_width_list, petal_length_list)
+    title = "r =" + str(round(getPearsonsCorrelation(data, "sepal_width", "petal_length"), 2)) + "; y = "+ str(round(a, 1)) + " + (" + str(round(b, 1)) + ")"
+    axis[1][1].set_title(title)
+    axis[1][1].set_xlabel("Szerokosc dzialki kielicha (cm)") 
+    axis[1][1].set_ylabel("Dlugosc platka (cm)")
+    
+    
+    
     generateScatterPlot(data, "sepal_width", "petal_length", axis[1][1])
     generateLinearRegressionPlot(data, "sepal_width", "petal_length", axis[1][1])
 
 # nastepny wykres
+    a, b = getLinearRegression(sepal_width_list, petal_width_list)
+    title = "r =" + str(round(getPearsonsCorrelation(data, "sepal_width", "petal_width"), 2)) + "; y = "+ str(round(a, 1)) + " + (" + str(round(b, 1)) + ")"
+    axis[2][0].set_title(title)
+    axis[2][0].set_xlabel("Szerokosc dzialki kielicha (cm)") 
+    axis[2][0].set_ylabel("Szerokosc platka (cm)")
+    
+
     generateScatterPlot(data, "sepal_width", "petal_width", axis[2][0])
     generateLinearRegressionPlot(data, "sepal_width", "petal_width", axis[2][0])
 
 # nastepny wykres
+    a, b = getLinearRegression(petal_length_list, petal_width_list)
+    title = "r =" + str(round(getPearsonsCorrelation(data, "petal_length", "petal_width"), 2)) + "; y = "+ str(round(a, 1)) + " + (" + str(round(b, 1)) + ")"
+    axis[2][1].set_title(title)
+    axis[2][1].set_xlabel("Dlugosc platka (cm)") 
+    axis[2][1].set_ylabel("Szerooksc platka (cm)")
+    
     generateScatterPlot(data, "petal_length", "petal_width", axis[2][1])
     generateLinearRegressionPlot(data, "petal_length", "petal_width", axis[2][1])
 

@@ -443,8 +443,8 @@ def generateLinearRegressionPlot(data, trait_x:str, trait_y:str, axis):
     
     a, b = getLinearRegression(list_X, list_Y)
     
-    line_x = [minimum["sepal_length"], maximum["sepal_length"]]
-    line_y = [minimum["sepal_length"]*a + b, maximum["sepal_length"] *a + b]
+    line_x = [minimum[trait_x], maximum[trait_x]]
+    line_y = [minimum[trait_x]*a + b, maximum[trait_x] *a + b]
     axis.plot(line_x, line_y, color="red")
 
 def arithAverage(lista:list) ->float:
