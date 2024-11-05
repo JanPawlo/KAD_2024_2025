@@ -412,12 +412,6 @@ def getPearsonsCorrelation(data, trait_x, trait_y):
     
     
     return (covariance_xy / (len(data)*(deviation_x*deviation_y)))
-        
-def getOffsetPearson(averageTraitX:float, averageTraitY:float, pearsonsCorrelation:float) -> float:
-    if averageTraitX:
-        print("Srednie X = 0 !!!")
-    return averageTraitY - (pearsonsCorrelation * averageTraitX)
-    
     
 
 def generateScatterPlot(data, trait_x, trait_y, axis):
@@ -439,6 +433,52 @@ def generateScatterPlot(data, trait_x, trait_y, axis):
     
     axis.scatter(x, y)
 
+def arithAverage(lista:list) ->float:
+    suma = 0;
+    for i in range(len(lista)):
+        suma += lista[i]
+    
+    return (suma*1.0 / len(lista))
+    
+def getCovariance(list_X:list, list_Y:list) -> float:
+    if (len(list_X) != len(list_Y)):
+        print("Dlugosc list nie jest zgodna. Metoda: getCovariation")
+    
+    dlugosc = len(list_X)
+    avr_X = arithAverage(list_X);
+    avr_Y = arithAverage(list_Y);
+    
+    midpointList = [];
+    
+    for i in range(dlugosc):
+        first = (list_X[i] - avr_X)
+        second = (list_Y[i] - avr_Y)
+        midpointList.append( (first*second) )
+
+
+    return arithAverage(midpointList)
+
+def getVariance(lista:list):
+    avr = arithAverage(lista)
+    
+    length = len(lista)
+    suma = 0;
+    for i in range(length):
+        wyraz = (lista[i] - avr)
+        suma += wyraz * wyraz
+    return suma * 1.0 / length
+
+
+def getLinearRegression(list_X:list, list_Y:list) -> (float ,float): # (a, b) from ax, b = y
+    var_X = getVariance(list_X)
+    covar_XY = getCovariance(list_X, list_Y)
+    
+    avr_X = arithAverage(list_X)
+    avr_Y = arithAverage(list_Y)
+
+    a = var_X / covar_XY
+    b = avr_Y - (a*avr_X)
+    return (a, b)
 
 # -------TESTS--------
 
@@ -575,20 +615,32 @@ def testGetPearsonsCorrelation():
 
     print()
 
-
-def testGetOffsetPearson():
-    print("Test Offest Calculation")
-    # X = [1, 2, 3, 4, 5]
-    averageX = 3.0
-    # Y = [1, 2, 3, 4, 5]
-    averageY = 3.0
-    pCorrel = 1.0
+def testGetCovariation():
+    print("Test Get Covariation")
     
-    print(getOffsetPearson(averageX, averageY, pCorrel) == 0.0)
-    print(getOffsetPearson(averageX, averageY+1, pCorrel) == 1.0)
+    daneX = [4, 5, 8, 9, 11]
+    daneY = [1, 7, 9, 12, 15]
+    daneZ = [16, 12, 15, 16, 10]    
+    
+    print(round(getCovariance(daneX, daneY), 2) == 11.68)
+    print(round(getCovariance(daneX, daneZ), 2) == -2.52)
+    
+    
+def testGetLinearRegression():
+    print("Test Linear Regression")
+    
+    daneX = [1, 2, 3, 4, 5]
+    daneY = [1, 2, 3, 4, 5]
+    daneZ = [2, 4, 6, 8, 10]
+    print(round(getLinearRegression(daneX, daneY)[0], 2) == 1.0)
+    print(round(getLinearRegression(daneX, daneY)[1], 2) == 0.0)
+    
+    print(getLinearRegression(daneX, daneZ))
+    print(round(getLinearRegression(daneX, daneZ)[0], 2) == 2.0)
+    print(round(getLinearRegression(daneX, daneZ)[1], 2) == 0.0)
     
     print()
-
+    
 # <<<<<<< HEAD
 # testFileLoader()
 # testCountThreeSpecies()
@@ -612,6 +664,7 @@ testFindQuartilesOfList()
 testGetQuartilesTraits()
 testGetStandardDeviationTraits()
 testGetPearsonsCorrelation()
-testGetOffsetPearson()
 
+testGetCovariation()
+testGetLinearRegression()
 # >>>>>>> 21f655db300d19549a1bd96a03405e2754f30a34

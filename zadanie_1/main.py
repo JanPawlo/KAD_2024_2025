@@ -69,12 +69,14 @@ def main():
     plt.show()
     
     
-    figure, axis = plt.subplots(4, 2, figsize=(10, 12)) # rows, columns
+    figure, axis = plt.subplots(4, 2, figsize=(10, 14)) # rows, columns
     figure.tight_layout(pad=4.0) # adjusting padding between plots
 
 
     pearsonsCorrelation01 = getPearsonsCorrelation(data, "sepal_length", "sepal_width")
-    title = "r =", str(round(pearsonsCorrelation01, 2)) + "; y ="
+    b = getOffsetPearson(average["sepal_length"], average["sepal_width"], pearsonsCorrelation01)
+    
+    title = "r =" + str(round(pearsonsCorrelation01, 2)) + "; y = ??? + " + str(round(b, 1))
     axis[0][0].set_title(title)
     generateScatterPlot(data, "sepal_length", "sepal_width", axis[0][0])
     axis[0][0].set_xlabel("Dlugosc dzialki kielicha (cm)") # Dlugosc dzialki kielicha w 1
@@ -83,8 +85,8 @@ def main():
     
     # dodanie lini, dosc chaotyczne, daloby sie to ladnie ujac
     # cos jest nie tak, wynik wychodzi zle, moze gdzies po drodze pomijamy jakies dane? albo zaokragalamy?
-    b = getOffsetPearson(average["sepal_length"], average["sepal_width"], pearsonsCorrelation01)
-    print(pearsonsCorrelation01, b);
+    
+    
     line_x = [minimum["sepal_length"], maximum["sepal_length"]]
     line_y = [minimum["sepal_length"]*pearsonsCorrelation01 + b, maximum["sepal_length"] * pearsonsCorrelation01 + b]
     axis[0][0].plot(line_x, line_y, color="red")
