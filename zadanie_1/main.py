@@ -73,7 +73,7 @@ def main():
     plt.show()
     
     
-    figure, axis = plt.subplots(4, 2, figsize=(10, 14)) # rows, columns
+    figure, axis = plt.subplots(3, 2, figsize=(10, 14)) # rows, columns
     figure.tight_layout(pad=4.0) # adjusting padding between plots
 
 
@@ -97,6 +97,30 @@ def main():
     generateLinearRegressionPlot(data, "sepal_length", "sepal_width", axis[0][0])
 
     
+# nastepny wykres
+    generateScatterPlot(data, "sepal_length", "petal_length", axis[0][1])
+    generateLinearRegressionPlot(data, "sepal_length", "petal_length", axis[0][1])
+
+# nastepny wykres
+    generateScatterPlot(data, "sepal_length", "petal_width", axis[1][0])
+    generateLinearRegressionPlot(data, "sepal_length", "petal_width", axis[1][0])
+
+# nastepny wykres
+    generateScatterPlot(data, "sepal_width", "petal_length", axis[1][1])
+    generateLinearRegressionPlot(data, "sepal_width", "petal_length", axis[1][1])
+
+# nastepny wykres
+    generateScatterPlot(data, "sepal_width", "petal_width", axis[2][0])
+    generateLinearRegressionPlot(data, "sepal_width", "petal_width", axis[2][0])
+
+# nastepny wykres
+    generateScatterPlot(data, "petal_length", "petal_width", axis[2][1])
+    generateLinearRegressionPlot(data, "petal_length", "petal_width", axis[2][1])
+
+
+
+
+
     plt.show()
     
 
