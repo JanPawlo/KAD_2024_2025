@@ -1,10 +1,12 @@
 import utility as U #utility commands, such as fileLoader, splitList
 import random
+import seaborn as sns
 from zadanie_2 import *
 
 
 
-
+# simple function that returns a tuple of two points, represented by lists of length N
+# where N is a random int number from 2-20
 def generate2randomPoints():
     dimensions = random.randint(2, 20)
     
@@ -52,5 +54,31 @@ def testEuclideanDistance():
     
     print()
     
+def testColors():
+    from matplotlib.colors import ListedColormap
+    import pandas as pd
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    my_colors = ListedColormap(sns.color_palette(U.colorPallete))
+    
+    one = [5, 7, 8, 12, 4, 6, 2]
+    two = [7, 6, 3, 1, 11, 9, 12]
+    three = [7, 6, 3, 1, 11, 9, 12]
+    four = [7, 6, 3, 1, 11, 9, 12]
+    five = [7, 6, 3, 1, 11, 9, 12]
+    six = [1, 4, 5, 1, 2, 3, 10]
+    index = ['Jack', 'Jill', 'James',
+         'Juliet', 'Jim', 'Jackie', 'Joe']
+    df = pd.DataFrame({'green light': one,
+                   'yellow light': two,
+                   'red light': three,
+                   'etc' : four,
+                   'etcs' : five,
+                   'etccc' : six}, index=index)
+    ax = df.plot.bar(rot=0, colormap=my_colors)
+    ax = df.plot.bar(rot=0)    
     
 testEuclideanDistance()
+testColors()
+
+

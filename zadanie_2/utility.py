@@ -1,5 +1,5 @@
 # A storage for functions usefull for many projects
-
+import random
 
 
 # Opens a .csv file, reads lines from it and saves it into an array as float values
@@ -41,3 +41,27 @@ def splitList(entryList):
     
     
     return (list1, list2)
+
+
+def encodeAsHex(d10:int) ->str:
+    
+    return
+
+# Returns a list of N colors, to be used for a pallete
+def createPalleteOfColors(N:int) ->str:
+    output = str()
+    red = list(); green = list(); blue = list()
+    
+    prev_choice = 0;
+    #pick R
+    for i in range (N):
+        prev_choice = random.randint(0+prev_choice, (int(255/N)*(i+1)))
+        red.append(prev_choice)
+    #pick G
+    print(red)
+    
+    #pick B
+
+# 10 element list of RGB colors. WARNING, potentially similar colors
+# also not super usefull
+colorPallete = ["#E1C588", "#7B2452", "#627098", "#DD858A", "#76B86F", "#1E4D5F", "#993900", "#4B0365", "#8E9700", "#00FFF5"]
