@@ -2,13 +2,27 @@ import matplotlib.pyplot as plt
 import math
 
 
-# calculates euclideanDistance between p1 and p2
-# @param p1, p2 - lists [x, y]
-# @return float
-def euclideanDistance(p1, p2):
-    distance = math.sqrt((p1[0]-p2[0])**2 +  (p1[1]-p2[1])**2)
-    return distance 
 
+# calculates euclideanDistance between 2 points located in ANY ammount dimensions
+# @param p1, p2 - lists [x, y, z, ... ]
+# @return float
+def euclideanDistance(p1:list, p2:list) -> float:
+    
+    # CHECKING VALUES
+    if (p1.length != p2.length):
+        raise Exception("euclideanDistanceNdim: Diffrent nr. of dimensions on points")
+    
+    dimensions = p1.length
+    
+    total = 0
+    # SUMATION
+    for i in range (dimensions):
+        word = p1[i] - p2[i]
+        total += word * word
+    distance = math.sqrt(total)
+    
+    return distance
+    
 # groups traits based on centroids that were given
 # @param data - two-dimensonial list
 # @param m - two-dimensional list with three centroids
