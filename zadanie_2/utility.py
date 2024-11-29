@@ -1,4 +1,4 @@
-
+# A storage for functions usefull for many projects
 
 
 

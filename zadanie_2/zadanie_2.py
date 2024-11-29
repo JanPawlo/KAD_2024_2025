@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import math
-import utility as U #utility commands, such as fileLoader, 
+import utility as U #utility commands, such as fileLoader, splitList
 
 # calculates euclideanDistance between 2 points located in ANY ammount dimensions
 # @param p1, p2 - lists [x, y, z, ... ]
