@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import math
-
-
+import utility as U #utility commands, such as fileLoader, 
 
 # calculates euclideanDistance between 2 points located in ANY ammount dimensions
 # @param p1, p2 - lists [x, y, z, ... ]
@@ -9,10 +8,10 @@ import math
 def euclideanDistance(p1:list, p2:list) -> float:
     
     # CHECKING VALUES
-    if (p1.length != p2.length):
+    if (len(p1) != len(p2)):
         raise Exception("euclideanDistanceNdim: Diffrent nr. of dimensions on points")
     
-    dimensions = p1.length
+    dimensions = len(p1)
     
     total = 0
     # SUMATION
