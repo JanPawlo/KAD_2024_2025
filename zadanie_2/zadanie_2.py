@@ -73,14 +73,24 @@ def groupWithKcentroids(data:list, K:int, cycles:int=100):
     i = 0
     while (i < cycles):
         adjudicateCentroidos(data, centroidos, centroidoAlignmentList)
+        raise NotImplementedError("adjustCentroidosNotDoneYet")
         # adjustCentroidos(data, centroidos)
         i += 1
 
+
+# Updates algimentList to show the closest Centroido to each data point.
+# @data - two dimensional list
+# @centroidos - one dimensional list of centroido points
+# @aligmentList - one dimensional, list of which point belongs to which centroido
 def adjudicateCentroidos(data:list, centroidos:list, aligmentList:list):
     
     for i in range(len(data)):
         aligmentList[i] = pickClosestPoint(data[i], centroidos)
-    
+
+# Finds which centroido Index is the closest one
+# @point - one dimensional list describing the 4 coordinates of a point
+# @centroidos - two dimensional list containing centroidos' dimensions
+# returns - index of the closes centroido
 def pickClosestPoint(point:list, centroidos:list):
     # First point as a comparisson
     closestIndex = 0
@@ -91,7 +101,7 @@ def pickClosestPoint(point:list, centroidos:list):
             closestDistance = currentDistance 
             closestIndex = i+1
     return closestIndex
-        
+
 # groups traits based on centroids that were given
 # @param data - two-dimensonial list
 # @param m - two-dimensional list with three centroids
