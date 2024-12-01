@@ -54,6 +54,18 @@ def testEuclideanDistance():
     
     print()
     
+    
+def testSelectRandomIndexes():
+    print("Test Select Random Indexes")
+    lista = [0, 1, 2, 3, 4, 5, 6]
+    wybrane = U.selectRandomIndexes(lista, 3)
+    for x in wybrane:
+        if not (x in {0, 1, 2, 3, 4, 5, 6}):
+            print(False, end=" ")
+        else:
+            print(True, end=" ")
+        
+    
 def testColors():
     from matplotlib.colors import ListedColormap
     import pandas as pd
@@ -80,5 +92,5 @@ def testColors():
     
 testEuclideanDistance()
 testColors()
-
+testSelectRandomIndexes()
 

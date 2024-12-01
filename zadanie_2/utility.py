@@ -2,6 +2,34 @@
 import random
 
 
+# Choses random indexes from a list of points.
+# Loses efficiency when howMany nears length of the list.
+# @points - list of points
+# @howMany - how many indexes do you want to pick (must be between 1 and len(points) )
+# returns - one dimensional list of all the picked indexes
+def selectRandomIndexes(points:list, howMany:int) -> list: 
+    picked = list()
+    
+    length = len(points)
+    if (howMany > length):
+        raise ValueError("Cant pick more points than there are in a list")
+    if (howMany <= 0):
+        raise ValueError("Can't pick 0 or less points")
+    
+    alreadyChosen = set()
+    
+    
+    successfull = 0
+    while (successfull < howMany):
+        new = random.randint(0, length-1)
+        if not (new in alreadyChosen):
+            alreadyChosen.add(new)
+            picked.append(new)
+            successfull += 1
+        
+    return picked
+    
+
 # Opens a .csv file, reads lines from it and saves it into an array as float values
 # @path - relative file path to the data
 # returns - two dimensional array of float values
@@ -43,9 +71,6 @@ def splitList(entryList):
     return (list1, list2)
 
 
-def encodeAsHex(d10:int) ->str:
-    
-    return
 
 # Returns a list of N colors, to be used for a pallete
 def createPalleteOfColors(N:int) ->str:
