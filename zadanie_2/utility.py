@@ -2,6 +2,16 @@
 import random
 
 
+
+
+
+# Appends a blank column (comprised of Nones) at the end of a 2 dimensional list.
+# Where i-rows, j-columns
+# @toBeAppended - list to be changed
+def appendColumnToList(toBeAppended:list):
+    for i in range(len(toBeAppended)):
+        toBeAppended[i].append(None)
+
 # Choses random indexes from a list of points.
 # Loses efficiency when howMany nears length of the list.
 # @points - list of points
