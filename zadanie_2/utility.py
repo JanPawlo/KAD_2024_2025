@@ -51,7 +51,7 @@ def fileLoader(path:str):
     i = 0;
     for x in file:
         dataTable.append(x.split(','))
-        for j in range(5):
+        for j in range(4):
             dataTable[i][j] = float(dataTable[i][j])
         i += 1
     
