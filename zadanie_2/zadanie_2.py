@@ -97,9 +97,9 @@ def adjudicateCentroidos(data:list, centroidos:list, aligmentList:list):
 def pickClosestPoint(point:list, centroidos:list):
     # First point as a comparisson
     closestIndex = 0
-    closestDistance = euclideanDistance(point, centroidos[0]) 
+    closestDistance = euclideanDistance(point, centroidos[0])**2 
     for i in range (len(centroidos)-1):
-        currentDistance = euclideanDistance(point, centroidos[i+1])
+        currentDistance = euclideanDistance(point, centroidos[i+1])**2
         if (currentDistance < closestDistance):
             closestDistance = currentDistance 
             closestIndex = i+1
@@ -163,7 +163,7 @@ def WCSS(centroids:list, clusters:list, data:list):
     sum_WCSS = 0;
     
     for i in range(len(centroids)):
-        for j in range(len(data)):
+        for j in range(len(clusters)):
             if(clusters[j] == i):
                 sum_WCSS += euclideanDistance(data[j], centroids[i])**2
     
