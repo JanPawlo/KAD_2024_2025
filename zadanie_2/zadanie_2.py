@@ -73,7 +73,6 @@ def groupWithKcentroids(data:list, K:int, cycles:int=100):
     i = 0
     while (i < cycles):
         adjudicateCentroidos(data, centroids, centroidoAlignmentList)
-        raise NotImplementedError("adjustcentroidNotDoneYet")
         adjustCentroids(data, centroids, centroidoAlignmentList)
         i += 1
 
@@ -131,6 +130,26 @@ def adjustCentroids(data:list, centroids:list, clusters:list):
     
     for i in range(len(centroids)):
         centroids[i] = averageCentroid(clusters, data, i)
+        
+# Scales all of the traits to the [0, 1] range
+# @data - two dimensional list
+# returns - two dimensional list with scaled data
+def minMaxScaling(data:list):
+    
+    #creating empty list for scaled data
+    scaled_data = [[None for _ in range(len(data)[0])] for _ in range(len(data))]
+    
+    for i in range(len(data[0])):
+        
+        minimum = U.getMinimumTraits(data)[i] # min of current trait
+        maximum = U.getMaximumTraits(data)[i] # max of current trait
+        
+        for j in range(len(data)):
+            scaled_data[j][i] = (data[j][i] - minimum)/(maximum - minimum)
+    
+    return scaled_data
+    
+            
     
     
         
