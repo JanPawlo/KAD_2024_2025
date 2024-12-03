@@ -31,8 +31,8 @@ def findBestResultsForK(N:int=10):
             print(i+2, ":", j)
         
     return results
-        
 
+        
 # calculates euclideanDistance between 2 points located in ANY ammount dimensions
 # @param p1, p2 - lists [x, y, z, ... ]
 # @return float
@@ -57,10 +57,10 @@ def euclideanDistance(p1:list, p2:list) -> float:
 def groupWithKcentroids(data:list, K:int, cycles:int=100):
     
     # SELECTING INITIAL, RANDOM CENTROIDOS
-    centroidos = list()
+    centroids = list()
     randomIndexes = U.selectRandomIndexes(data, K)
     for i in range (K):
-        centroidos.append(data[randomIndexes[i]])
+        centroids.append(data[randomIndexes[i]])
     
     
     # CREATING ADDITIONAL BLANK LIST - REPRESENTING TO WHICH CENTROID A POINT BELONGS
@@ -72,15 +72,15 @@ def groupWithKcentroids(data:list, K:int, cycles:int=100):
     # DOING A SET NR OF CYCLES
     i = 0
     while (i < cycles):
-        adjudicateCentroidos(data, centroidos, centroidoAlignmentList)
-        raise NotImplementedError("adjustCentroidosNotDoneYet")
-        # adjustCentroidos(data, centroidos)
+        adjudicateCentroidos(data, centroids, centroidoAlignmentList)
+        raise NotImplementedError("adjustcentroidNotDoneYet")
+        adjustCentroids(data, centroids, centroidoAlignmentList)
         i += 1
 
 
 # Updates algimentList to show the closest Centroido to each data point.
 # @data - two dimensional list
-# @centroidos - one dimensional list of centroido points
+# @centroid - one dimensional list of centroido points
 # @aligmentList - one dimensional, list of which point belongs to which centroido
 def adjudicateCentroidos(data:list, centroidos:list, aligmentList:list):
     
@@ -102,19 +102,37 @@ def pickClosestPoint(point:list, centroidos:list):
             closestIndex = i+1
     return closestIndex
 
-# groups traits based on centroids that were given
-# @param data - two-dimensonial list
-# @param m - two-dimensional list with three centroids
-# @param trait1, trait2 - indexes
-def group(data, m, trait1, trait2):
+# Finds new centroid
+# @clusters - one dimensional list containing index of centroids
+# @data -two dimensional list
+# @centroid - index of centroid we want to adjust
+# retruns - new centroid ([x, y, z, w])
+def averageCentroid(clusters:list, data:list, centroid_index:int):
     
-    S = [[],[],[]] #[S1, S2, S3]
+    new_centroid = [0, 0, 0, 0]
+    x = 0 
     
-    for x in data:
-        p = [x[trait1], x[trait2]] #point
-        for i in range(3):
-            for j in range(1, 3):
-                distance1 = euclideanDistance(p, m[i])**2 <= euclideanDistance(p, m[(i+j)%3])**2
-                distance2 = euclideanDistance(p, m[i])**2 <= euclideanDistance(p, m[(i+j+1)%3])**2
-                if(distance1 and distance2):
-                        S[i].append(p)
+    for i in range(len(data)):
+        if(clusters[i] == centroid_index):
+            x += 1
+            for j in range(4):
+                new_centroid[j] += data[i][j]
+    
+    for i in range(4):
+        new_centroid[i] /= x 
+    
+    return new_centroid
+
+# Adjusts all centroids in a given list
+# @data - two dimensional list
+# @centroids - two dimensional list containing current centroids
+# @clusters - one dimensional list containing index of centroids
+def adjustCentroids(data:list, centroids:list, clusters:list):
+    
+    for i in range(len(centroids)):
+        centroids[i] = averageCentroid(clusters, data, i)
+    
+    
+        
+    
+
