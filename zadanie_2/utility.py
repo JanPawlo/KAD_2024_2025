@@ -87,6 +87,43 @@ def splitList(entryList):
     
     return (list1, list2)
 
+# Tracks the highest values for each of the 4 traits
+# @data parameter - float [x][y]
+# returns dictionary of maximum traits
+def getMaximumTraits(data):
+    
+    maximumTraits = {
+        0 : 0,
+        1 : 0,
+        2 : 0,
+        3 : 0
+        }
+    
+    for i in range(len(data)):
+        for j in range(4):
+            if maximumTraits[j] < data[i][j]:
+                maximumTraits[j] = data[i][j]    
+
+    return maximumTraits
+
+# Tracks the lowest values for each of the 4 traits
+# @data parameter - float [x][y]
+# returns dictionary of minimum traits
+def getMinimumTraits(data):
+    
+    minimumTraits = {
+        0 : 999, #swap for first row's values? 
+        1 : 999,
+        2 : 999,
+        3 : 999,
+        }
+    
+    for i in range(len(data)):
+        for j in range(4):
+            if minimumTraits[j] > data[i][j]:
+                minimumTraits[j] = data[i][j]
+                
+    return minimumTraits
 
 
 # Returns a list of N colors, to be used for a pallete
