@@ -59,6 +59,13 @@ def fileLoader(path:str):
     
     return dataTable
 
+# Rounds every element of a list
+# @lista - one dimensional list of floats
+# @dokladnosc - e.g. 0.01 for 2
+# returns - list with rounded elements
+def roundList(lista:list, dokladnosc:int):
+    return [round(x, dokladnosc) for x in lista]
+
 
 
 
