@@ -137,7 +137,7 @@ def adjustCentroids(data:list, centroids:list, clusters:list):
 def minMaxScaling(data:list):
     
     #creating empty list for scaled data
-    scaled_data = [[None for _ in range(len(data)[0])] for _ in range(len(data))]
+    scaled_data = [[None for _ in range(len(data[0]))] for _ in range(len(data))]
     
     for i in range(len(data[0])):
         
