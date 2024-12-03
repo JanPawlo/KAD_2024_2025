@@ -130,9 +130,23 @@ def testAdjustCentroid():
     print(U.roundList(centroids[2], 2) == [4.9, 3.1, 1.5, 0.1])
     print(U.roundList(centroids[1], 2) == [4.7, 3.15, 1.45, 0.2])
     print(U.roundList(centroids[0], 2) == [4.9, 3.39, 1.44, 0.24])
-     
     
+    print()
+
+def testMinMaxScaling():
+    print("Test Min Max Scaling")
     
+    data = U.fileLoader("testData2.csv")
+
+    scaled_data = minMaxScaling(data)
+    
+    print(U.roundList(scaled_data[0], 2) == [0.7, 0.6, 0.25, 0.33])
+    print(U.roundList(scaled_data[1], 2) == [0.5, 0.1, 0.25, 0.33])
+    print(U.roundList(scaled_data[2], 2) == [0.3, 0.3, 0, 0.33])
+    print(U.roundList(scaled_data[5], 2) == [1, 1, 1, 1])
+    print(U.roundList(scaled_data[8], 2) == [0, 0, 0.25, 0.33])
+    
+    print()
 
 
 # def testColors():
@@ -166,3 +180,4 @@ testAppendColumnToList()
 testAssignCentroidos()
 testAverageCentroid()
 testAdjustCentroid()
+testMinMaxScaling()
