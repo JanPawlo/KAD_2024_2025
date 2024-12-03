@@ -148,6 +148,23 @@ def minMaxScaling(data:list):
             scaled_data[j][i] = (data[j][i] - minimum)/(maximum - minimum)
     
     return scaled_data
+
+# Calculates WCSS (within-cluster sum of squares)
+# @centroids - two dimensional list containing all centroids
+# @clusters - one dimensional list containing index of centroids
+# @data - two dimensional list
+# returns - WCSS
+def WCSS(centroids:list, clusters:list, data:list):
+    
+    sum_WCSS = 0;
+    
+    for i in range(len(centroids)):
+        for j in range(len(data)):
+            if(clusters[j] == i):
+                sum_WCSS += euclideanDistance(data[j], centroids[i])**2
+    
+    return sum_WCSS
+                
     
             
     
