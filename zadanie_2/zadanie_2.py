@@ -55,6 +55,7 @@ def euclideanDistance(p1:list, p2:list) -> float:
     
     return distance
 
+#returns - clusters (centroidoAligmentList), centroids
 def groupWithKcentroids(data:list, K:int, cycles:int=100):
     
     # SELECTING INITIAL, RANDOM CENTROIDOS
@@ -76,6 +77,8 @@ def groupWithKcentroids(data:list, K:int, cycles:int=100):
         adjudicateCentroidos(data, centroids, centroidoAlignmentList)
         adjustCentroids(data, centroids, centroidoAlignmentList)
         i += 1
+    
+    return centroidoAlignmentList, centroids
 
 
 # Updates algimentList to show the closest Centroido to each data point.
@@ -183,10 +186,14 @@ def generateScatterPlot(data:list, trait_x:int, trait_y:int, axis, clusters:list
     df = pd.DataFrame(dict(x=x, y=y, clusters=clusters))
     colors = {0:'red', 1:'green', 2:'blue'}
     
+    axis.scatter(df['x'], df['y'], edgecolors=df['clusters'].map(colors), facecolors='none')
     
-    axis.scatter(df['x'], df['y'], c=df['clusters'].map(colors))
+    #centroids
+    centroids_x = [centroids[0][trait_x], centroids[1][trait_x], centroids[2][trait_x]]
+    centroids_y = [centroids[0][trait_y], centroids[1][trait_y], centroids[2][trait_y]]
     
-    #TBD show centroids
+    axis.scatter(centroids_x, centroids_y, marker="D", s=120, c=['red', 'green', 'blue'])
+    
     
     #in main(): plt.show()
     

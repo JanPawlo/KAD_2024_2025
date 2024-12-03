@@ -18,6 +18,13 @@ def main():
         if(current_WCSS > WCSS(new_centroids, new_clusters, normalized_data)):
             clusters, centroids = new_clusters, new_centroids
             
+    # "denormalize" centroids
+    for i in range(4):
+        minimum = U.getMinimumTraits(data)[i] # min of current trait
+        maximum = U.getMaximumTraits(data)[i] # max of current trait
+        for j in range(3):
+            centroids[j][i] = centroids[j][i]*(maximum - minimum) + minimum
+    
     
     # Displaying the scatter plots with grouping
     figure, axis = plt.subplots(3, 2, figsize=(10, 14)) # rows, columns
@@ -48,6 +55,8 @@ def main():
     axis[2][1].set_ylabel("Szerokość płatka (cm)")
     
     plt.show()
+    
+    
     
     return 0;
 
