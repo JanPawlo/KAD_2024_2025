@@ -16,6 +16,7 @@ def main():
     for i in range(10):
         new_clusters, new_centroids = groupWithKcentroids(normalized_data, 3)
         if(current_WCSS > WCSS(new_centroids, new_clusters, normalized_data)):
+            current_WCSS = WCSS(new_centroids, new_clusters, normalized_data)
             clusters, centroids = new_clusters, new_centroids
             
     # "denormalize" centroids
@@ -56,7 +57,17 @@ def main():
     
     plt.show()
     
+    #generate WCSS for k=2,3,...,10
+    WCSS_list = list()
+    for i in range(2, 11):
+        clusters, centroids = groupWithKcentroids(normalized_data, i)
+        WCSS_list.append(WCSS(centroids, clusters, normalized_data))
     
+    
+    plt.plot(range(2, 11), WCSS_list, marker='o', markerfacecolor='red')  
+    plt.xlabel('Liczba klastrów (k)')
+    plt.ylabel('WCSS')
+     
     
     return 0;
 
