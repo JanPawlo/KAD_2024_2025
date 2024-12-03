@@ -1,6 +1,6 @@
 import utility as U #utility commands, such as fileLoader, splitList
 import random
-import seaborn as sns
+# import seaborn as sns
 from zadanie_2 import *
 
 
@@ -105,6 +105,35 @@ def testAppendColumnToList():
     else:
         print(False)
     print()
+    
+def testAverageCentroid():
+    print("Test Average Centroid")
+    
+    data = U.fileLoader("testData2.csv")
+    clusters = [0, 0, 0, 0, 0, 0, 0, 1, 1, 2]
+    
+    print(U.roundList(averageCentroid(clusters, data, 2), 2) == [4.9, 3.1, 1.5, 0.1])
+    print(U.roundList(averageCentroid(clusters, data, 1), 2) == [4.7, 3.15, 1.45, 0.2])
+    print(U.roundList(averageCentroid(clusters, data, 0), 2) == [4.9, 3.39, 1.44, 0.24])
+    
+    print()
+    
+def testAdjustCentroid():
+    print("Test Adjust Centroid")
+    
+    data = U.fileLoader("testData2.csv")
+    centroids = [[1, 2, 3, 4], [0, 0, 0, 0], [1000,1000,1000,100]]
+    clusters = [0, 0, 0, 0, 0, 0, 0, 1, 1, 2]
+    
+    adjustCentroids(data, centroids, clusters)
+    
+    print(U.roundList(centroids[2], 2) == [4.9, 3.1, 1.5, 0.1])
+    print(U.roundList(centroids[1], 2) == [4.7, 3.15, 1.45, 0.2])
+    print(U.roundList(centroids[0], 2) == [4.9, 3.39, 1.44, 0.24])
+     
+    
+    
+
 
 # def testColors():
 #     from matplotlib.colors import ListedColormap
@@ -135,3 +164,5 @@ testEuclideanDistance()
 testSelectRandomIndexes()
 testAppendColumnToList()
 testAssignCentroidos()
+testAverageCentroid()
+testAdjustCentroid()
