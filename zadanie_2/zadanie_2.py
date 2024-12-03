@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import math
+import pandas as pd
 import utility as U #utility commands, such as fileLoader, splitList
 
 
@@ -165,8 +166,29 @@ def WCSS(centroids:list, clusters:list, data:list):
     
     return sum_WCSS
                 
+# generates ScatterPlot with 3 colored groups
+# @trait_x, trait_y - indexes of traits
+# @clusters - one dimensional list containing index of centroids
+# @centroids - two dimensional list containing all centroids
+def generateScatterPlot(data:list, trait_x:int, trait_y:int, axis, clusters:list, centroids:list):
     
-            
+    
+    x = []
+    y = []
+    
+    for i in range(len(data)):
+        x.append(data[i][trait_x])
+        y.append(data[i][trait_y])
+    
+    df = pd.DataFrame(dict(x=x, y=y, clusters=clusters))
+    colors = {0:'red', 1:'green', 2:'blue'}
+    
+    
+    axis.scatter(df['x'], df['y'], c=df['clusters'].map(colors))
+    
+    #TBD show centroids
+    
+    #in main(): plt.show()
     
     
         
