@@ -18,7 +18,7 @@ def findBestResultsForK(normalized_data:list, N:int=10):
         for i in range(N-1):
             clusters, centroids = groupWithKcentroids(normalized_data, k+2)
             current_WCSS = WCSS(centroids, clusters, normalized_data)
-            if (bestResults[k] < current_WCSS):
+            if (bestResults[k] > current_WCSS):
                 bestResults[k] = current_WCSS
     return bestResults
 
@@ -97,23 +97,25 @@ def pickClosestPoint(point:list, centroidos:list):
 # Finds new centroid
 # @clusters - one dimensional list containing index of centroids
 # @data -two dimensional list
-# @centroid - index of centroid we want to adjust
+# @old_centroids - list of previous centroids
+# @centroid_index - of centroid we want to adjust
 # returns - new centroid ([x, y, z, w])
-def averageCentroid(clusters:list, data:list, centroid_index:int):
+def averageCentroid(clusters:list, data:list, old_centroids:list, centroid_index:int):
     
     new_centroid = [0, 0, 0, 0]
     x = 0 
     
     for i in range(len(data)):
-        if(clusters[i] == centroid_index): #jezeli clusters[i] != centroid indext to wywala
-            x += 1 #czemu tak jest czasami? hmm
+        if(clusters[i] == centroid_index):
+            x += 1
             for j in range(4):
                 new_centroid[j] += data[i][j]
     if (x==0):
-        print("centroid indext:", centroid_index, "set:", );
-    for i in range(4):
-        new_centroid[i] /= x 
-    
+        new_centroid = old_centroids[centroid_index]
+    else:
+        for i in range(4):
+            new_centroid[i] /= x 
+        
     return new_centroid
 
 # Adjusts all centroids in a given list
@@ -123,7 +125,7 @@ def averageCentroid(clusters:list, data:list, centroid_index:int):
 def adjustCentroids(data:list, centroids:list, clusters:list):
     
     for i in range(len(centroids)):
-        centroids[i] = averageCentroid(clusters, data, i)
+        centroids[i] = averageCentroid(clusters, data, centroids, i)
         
 # Scales all of the traits to the [0, 1] range
 # @data - two dimensional list
