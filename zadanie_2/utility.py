@@ -3,8 +3,14 @@ import random
 
 
 
-
-
+def dotToComma(writing:str):
+    new_writing = str()
+    for i in range(len(writing)):
+        if (writing[i] == "."):
+            new_writing = new_writing + ","
+        else:
+            new_writing = new_writing + writing[i]
+    return str(new_writing)
 # Appends a blank column (comprised of Nones) at the end of a 2 dimensional list.
 # Where i-rows, j-columns
 # @toBeAppended - list to be changed

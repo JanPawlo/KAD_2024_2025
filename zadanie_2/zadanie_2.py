@@ -45,7 +45,7 @@ def euclideanDistance(p1:list, p2:list) -> float:
     return distance
 
 #returns - clusters (centroidoAligmentList), centroids
-def groupWithKcentroids(data:list, K:int, cycles:int=100):
+def groupWithKcentroids(data:list, K:int, cycles:int=1000):
     
     # SELECTING INITIAL, RANDOM CENTROIDOS
     centroids = list()

@@ -67,7 +67,9 @@ def main():
     
     plt.plot(range(2, 11), WCSS_list, marker='o', markerfacecolor='red')  
     for a,b in zip(X_points, WCSS_list):
-        plt.text(a, b, str(round(b, 1)), ha='left', va='bottom')
+        wynik = str(round(b, 1))
+        wynik = U.dotToComma(wynik)
+        plt.text(a, b, wynik, ha='left', va='bottom')
     plt.xlabel('Liczba klastrów (k)')
     plt.ylabel('WCSS')
      
