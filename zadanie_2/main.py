@@ -62,7 +62,7 @@ def main():
     # finding the best WCSS for each K
     WCSS_list = findBestResultsForK(normalized_data)
     for i in range(len(WCSS_list)):
-        print("Najlepszy wynik dla k: WCSS =", i+2, round(WCSS_list[i], 1), "100 cyklow")
+        print("Najlepszy wynik dla k:", i+2, "WCSS =", round(WCSS_list[i], 1), "100 cyklow")
     
     
     plt.plot(range(2, 11), WCSS_list, marker='o', markerfacecolor='red')  
