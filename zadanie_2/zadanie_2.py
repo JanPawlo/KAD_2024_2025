@@ -10,9 +10,9 @@ import utility as U #utility commands, such as fileLoader, splitList
 # returns - best parameters achieved by each of the K-groupings.
 def findBestResultsForK(normalized_data:list, N:int=10):
     
-    bestResults = [None] * 8
+    bestResults = [None] * 9
     
-    for k in range(8):
+    for k in range(9):
         clusters, centroids = groupWithKcentroids(normalized_data, k+2)
         bestResults[k] = WCSS(centroids, clusters, normalized_data)
         for i in range(N-1):
@@ -45,7 +45,7 @@ def euclideanDistance(p1:list, p2:list) -> float:
     return distance
 
 #returns - clusters (centroidoAligmentList), centroids
-def groupWithKcentroids(data:list, K:int, cycles:int=250):
+def groupWithKcentroids(data:list, K:int, cycles:int=100):
     
     # SELECTING INITIAL, RANDOM CENTROIDOS
     centroids = list()
@@ -98,18 +98,19 @@ def pickClosestPoint(point:list, centroidos:list):
 # @clusters - one dimensional list containing index of centroids
 # @data -two dimensional list
 # @centroid - index of centroid we want to adjust
-# retruns - new centroid ([x, y, z, w])
+# returns - new centroid ([x, y, z, w])
 def averageCentroid(clusters:list, data:list, centroid_index:int):
     
     new_centroid = [0, 0, 0, 0]
     x = 0 
     
     for i in range(len(data)):
-        if(clusters[i] == centroid_index):
-            x += 1
+        if(clusters[i] == centroid_index): #jezeli clusters[i] != centroid indext to wywala
+            x += 1 #czemu tak jest czasami? hmm
             for j in range(4):
                 new_centroid[j] += data[i][j]
-    
+    if (x==0):
+        print("centroid indext:", centroid_index, "set:", );
     for i in range(4):
         new_centroid[i] /= x 
     

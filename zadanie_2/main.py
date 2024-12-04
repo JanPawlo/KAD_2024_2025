@@ -9,20 +9,15 @@ def main():
     data = U.fileLoader("data2.csv")
     normalized_data = minMaxScaling(data)
     
-    
-    # finding the best WCSS for each K
-    bestResults = findBestResultsForK(normalized_data)
-    for i in range(len(bestResults)):
-        print("Najlepszy wynik WCSS dla k=", i+2, round(bestResults[i], 1), "250 cyklow")
-    
+    #wynik dla k=3
     clusters, centroids = groupWithKcentroids(normalized_data, 3)
     current_WCSS = WCSS(centroids, clusters, normalized_data)
     
-    
-    new_clusters, new_centroids = groupWithKcentroids(normalized_data, 3)
-    if(current_WCSS > WCSS(new_centroids, new_clusters, normalized_data)):
-        current_WCSS = WCSS(new_centroids, new_clusters, normalized_data)
-        clusters, centroids = new_clusters, new_centroids
+    # do prezentacji k=3, nie robimy chyba wyboru najlepszego z kilku
+    # new_clusters, new_centroids = groupWithKcentroids(normalized_data, 3)
+    # if(current_WCSS > WCSS(new_centroids, new_clusters, normalized_data)):
+    #     current_WCSS = WCSS(new_centroids, new_clusters, normalized_data)
+    #     clusters, centroids = new_clusters, new_centroids
     
     # "denormalize" centroids
     for i in range(4):
@@ -63,11 +58,11 @@ def main():
     plt.show()
     
     #generate WCSS for k=2,3,...,10
-    WCSS_list = list()
     X_points = [2, 3, 4, 5, 6, 7, 8, 9, 10]
-    for i in range(2, 11):
-        clusters, centroids = groupWithKcentroids(normalized_data, i)
-        WCSS_list.append(WCSS(centroids, clusters, normalized_data))
+    # finding the best WCSS for each K
+    WCSS_list = findBestResultsForK(normalized_data)
+    for i in range(len(WCSS_list)):
+        print("Najlepszy wynik WCSS dla k =", i+2, round(WCSS_list[i], 1), "100 cyklow")
     
     
     plt.plot(range(2, 11), WCSS_list, marker='o', markerfacecolor='red')  
