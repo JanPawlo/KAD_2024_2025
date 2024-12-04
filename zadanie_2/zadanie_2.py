@@ -8,30 +8,19 @@ import utility as U #utility commands, such as fileLoader, splitList
 # Does N (10) runs of our generic grouping algorithm for each of our K values (2-10).
 # @param N - int, number of runs to be done.
 # returns - best parameters achieved by each of the K-groupings.
-def findBestResultsForK(N:int=10):
+def findBestResultsForK(normalized_data:list, N:int=10):
     
-    raise NotImplementedError("Ta funkcja potrzebuje implementacji grupowania!")
+    bestResults = [None] * 8
     
-    results = list()    # A 8 x 2 list
-                        # first index [i] determines K-number(with a -2 offset)
-                        # second index [j] determines: 0-ile cyklow; 1-jakosc dopasowania
-                        # zapomnialem jak te miary jakosci wynikow sie nazywaja xDD
-
-    for i in range(9):
-        # firstReadout = findKgroups(i+2)
-        # firstResults = list(firstReadout[0], firstReadout[1])
-        # results[i].append(firstResults)
-        for j in range(N):
-            # readout = findKgroups(i+2)
-            # if (readout[0] < results[i][0]):
-            #     results[i][0] = readout[0]
-            # if (readout[1] > results[i][1]):
-            #     results[i][1] = readout[1]
-                
-            #all all the sequences
-            print(i+2, ":", j)
-        
-    return results
+    for k in range(8):
+        clusters, centroids = groupWithKcentroids(normalized_data, k+2)
+        bestResults[k] = WCSS(centroids, clusters, normalized_data)
+        for i in range(N-1):
+            clusters, centroids = groupWithKcentroids(normalized_data, k+2)
+            current_WCSS = WCSS(centroids, clusters, normalized_data)
+            if (bestResults[k] < current_WCSS):
+                bestResults[k] = current_WCSS
+    return bestResults
 
         
 # calculates euclideanDistance between 2 points located in ANY ammount dimensions
@@ -56,7 +45,7 @@ def euclideanDistance(p1:list, p2:list) -> float:
     return distance
 
 #returns - clusters (centroidoAligmentList), centroids
-def groupWithKcentroids(data:list, K:int, cycles:int=100):
+def groupWithKcentroids(data:list, K:int, cycles:int=250):
     
     # SELECTING INITIAL, RANDOM CENTROIDOS
     centroids = list()

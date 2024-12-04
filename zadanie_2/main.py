@@ -10,15 +10,20 @@ def main():
     normalized_data = minMaxScaling(data)
     
     
-    # finding the best WCSS (potentially could be implemented as function)
+    # finding the best WCSS for each K
+    bestResults = findBestResultsForK(normalized_data)
+    for i in range(len(bestResults)):
+        print("Najlepszy wynik WCSS dla k=", i+2, round(bestResults[i], 1), "250 cyklow")
+    
     clusters, centroids = groupWithKcentroids(normalized_data, 3)
     current_WCSS = WCSS(centroids, clusters, normalized_data)
-    for i in range(10):
-        new_clusters, new_centroids = groupWithKcentroids(normalized_data, 3)
-        if(current_WCSS > WCSS(new_centroids, new_clusters, normalized_data)):
-            current_WCSS = WCSS(new_centroids, new_clusters, normalized_data)
-            clusters, centroids = new_clusters, new_centroids
-            
+    
+    
+    new_clusters, new_centroids = groupWithKcentroids(normalized_data, 3)
+    if(current_WCSS > WCSS(new_centroids, new_clusters, normalized_data)):
+        current_WCSS = WCSS(new_centroids, new_clusters, normalized_data)
+        clusters, centroids = new_clusters, new_centroids
+    
     # "denormalize" centroids
     for i in range(4):
         minimum = U.getMinimumTraits(data)[i] # min of current trait
@@ -59,12 +64,15 @@ def main():
     
     #generate WCSS for k=2,3,...,10
     WCSS_list = list()
+    X_points = [2, 3, 4, 5, 6, 7, 8, 9, 10]
     for i in range(2, 11):
         clusters, centroids = groupWithKcentroids(normalized_data, i)
         WCSS_list.append(WCSS(centroids, clusters, normalized_data))
     
     
     plt.plot(range(2, 11), WCSS_list, marker='o', markerfacecolor='red')  
+    for a,b in zip(X_points, WCSS_list):
+        plt.text(a, b, str(round(b, 1)), ha='left', va='bottom')
     plt.xlabel('Liczba klastrów (k)')
     plt.ylabel('WCSS')
      
