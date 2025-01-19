@@ -83,7 +83,7 @@ def findNearestNeighbours(k:int, L:list):
 
 # @param classesNum -> number of classes
 # NOT FINISHED
-def ClassMembership(data:list, nearestNeighboursIndexes:list, classesNum:int):
+def determineClassMembership(data:list, nearestNeighboursIndexes:list, classesNum:int):
     
     # creating list with classesNum elements with each element equal to 0
     classCount = []
