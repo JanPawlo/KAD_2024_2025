@@ -1,4 +1,5 @@
 import math
+import copy
 
 # Opens a .csv file, reads lines from it and saves it into an array as float values
 # @path - relative file path to the data
@@ -51,9 +52,32 @@ def kNearestNeighbours(data:list, k:int, point:list):
         L.append(euclideanDistance(x[:4], point)) 
     
     # 2. Identify k points in L with the smallest distance from p.
-    # nearestNeighbours = findNearestNeighbours(data, k, L)
+    nearestNeighboursIndexes = findNearestNeighbours(k, L)
     
     # 3. Determine the most common class among the k of nearest neighbours.
     # ClassMembership = determineClassMembership(nearestNeighbours) 
     
     return 0;
+
+# @return - indexes of K nearest points
+def findNearestNeighbours(k:int, L:list):
+    
+    if k > len(L):
+      raise ValueError("k cannot be greater than the length of the list.")
+
+    L_copy = copy.deepcopy(L)
+    nearestNeighboursIndexes = []
+
+    # Find K nearest points
+    for i in range(k):
+        nearestPointIndex = 0
+        # Find the CURRENT nearest point
+        for j in range(1, len(L_copy)):
+            if L_copy[nearestPointIndex] > L_copy[j]:
+                nearestPointIndex = j
+        # Save and change the current nearest point to infinity (it won't be considered during another iteration)
+        nearestNeighboursIndexes.append(nearestPointIndex)
+        L_copy[nearestPointIndex] = float('inf')
+    
+    return nearestNeighboursIndexes
+            
