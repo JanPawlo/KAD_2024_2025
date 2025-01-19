@@ -82,7 +82,6 @@ def findNearestNeighbours(k:int, L:list):
     return nearestNeighboursIndexes
 
 # @param classesNum -> number of classes
-# NOT FINISHED
 def determineClassMembership(data:list, nearestNeighboursIndexes:list, classesNum:int):
     
     # creating list with classesNum elements with each element equal to 0
@@ -95,12 +94,19 @@ def determineClassMembership(data:list, nearestNeighboursIndexes:list, classesNu
         classCount[data[x][-1]] += 1
     
     # determine the most common class
-    # NOT FINISHED
     classMembership = 0
+    tie = False
     for i in range(1, classesNum):
         if(classCount[classMembership] < classCount[i]):
             classMembership = i
-        # else if((classCount[classMembership] == classCount[i]))
+            tie = False
+        elif(classCount[classMembership] == classCount[i]):
+            tie = True
+            
+    # in case of a tie run again with a smaller k
+    if(tie):
+        determineClassMembership(data, nearestNeighboursIndexes[:-1], classesNum)
+
     
     return classMembership
     
