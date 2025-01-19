@@ -55,9 +55,9 @@ def kNearestNeighbours(data:list, k:int, point:list):
     nearestNeighboursIndexes = findNearestNeighbours(k, L)
     
     # 3. Determine the most common class among the k of nearest neighbours.
-    # ClassMembership = determineClassMembership(nearestNeighbours) 
+    classMembership = determineClassMembership(data, nearestNeighboursIndexes, 3) 
     
-    return 0;
+    return classMembership;
 
 # @return - indexes of K nearest points
 def findNearestNeighbours(k:int, L:list):
@@ -80,4 +80,28 @@ def findNearestNeighbours(k:int, L:list):
         L_copy[nearestPointIndex] = float('inf')
     
     return nearestNeighboursIndexes
+
+# @param classesNum -> number of classes
+# NOT FINISHED
+def ClassMembership(data:list, nearestNeighboursIndexes:list, classesNum:int):
+    
+    # creating list with classesNum elements with each element equal to 0
+    classCount = []
+    for i in range(classesNum):
+        classCount.append(0)
+        
+    # count the classes 
+    for x in nearestNeighboursIndexes:
+        classCount[data[x][-1]] += 1
+    
+    # determine the most common class
+    # NOT FINISHED
+    classMembership = 0
+    for i in range(1, classesNum):
+        if(classCount[classMembership] < classCount[i]):
+            classMembership = i
+        # else if((classCount[classMembership] == classCount[i]))
+    
+    return classMembership
+    
             
