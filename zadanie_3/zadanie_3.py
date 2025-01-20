@@ -42,6 +42,7 @@ def euclideanDistance(p1:list, p2:list) -> float:
     return distance
 
 # @param point - classified object
+# @param data - 2D list with [x, y, z, ... , classNumber] pattern
 def kNearestNeighbours(data:list, k:int, point:list):
     
     L = []
@@ -49,7 +50,7 @@ def kNearestNeighbours(data:list, k:int, point:list):
     
     # 1. Calculate the Euclidean distance between p and all points in the dataset, storing the results in the list L.    
     for x in data:
-        L.append(euclideanDistance(x[:4], point)) 
+        L.append(euclideanDistance(x[:-1], point)) 
     
     # 2. Identify k points in L with the smallest distance from p.
     nearestNeighboursIndexes = findNearestNeighbours(k, L)
