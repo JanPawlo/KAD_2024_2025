@@ -167,9 +167,10 @@ def testConfusionMatrix():
     confusionMatrix = calculateConfusionMatrix(testData, trainingData)
     print(confusionMatrix)
 
+
     df_cm = pd.DataFrame(confusionMatrix, range(3), range(3))
     sn.set(font_scale=1.4) # for label size
-    sn.heatmap(df_cm, annot=True, annot_kws={"size": 14}) # font size
+    sn.heatmap(df_cm, fmt="d", annot=True, annot_kws={"size": 14}) # font size
     
     
     

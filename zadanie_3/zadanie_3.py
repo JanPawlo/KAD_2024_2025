@@ -262,7 +262,11 @@ def calculateConfusionMatrix(testData, trainingData):
         # successPercentage.append(0) 
         for x in testData:
             # first is guess, second is true
-            confusionMatrix[kNearestNeighbours(testData, k+1, x[:-1])][x[-1]] +=1
+            guess = kNearestNeighbours(testData, k+1, x[:-1])
+            true = x[-1]
+            # if (guess != true):
+            #     print("guess:", guess, "true:", true)
+            confusionMatrix[guess][true] +=1
     
     
     return confusionMatrix
