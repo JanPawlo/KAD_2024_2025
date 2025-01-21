@@ -24,37 +24,75 @@ def testKnearestNeighbours():
         ]
     k = 1
     point0 = [0, 0, 0, 0]; point1 = [100, 100, 100, 100]; point2 = [50, 50, 50, 50];
-    print("k == 1")
-    print("0:",kNearestNeighbours(fakeData, k, point0) == 0, kNearestNeighbours(fakeData, k, point0)) 
-    print("1:",kNearestNeighbours(fakeData, k, point1) == 1, kNearestNeighbours(fakeData, k, point1))
-    print("2:",kNearestNeighbours(fakeData, k, point2) == 2, kNearestNeighbours(fakeData, k, point2))
-
-    print("k == 2")
-    print("0:", kNearestNeighbours(fakeData, k+1, point0) == 0, kNearestNeighbours(fakeData, k+1, point0))
-    print("1:",kNearestNeighbours(fakeData, k+1, point1) == 1, kNearestNeighbours(fakeData, k+1, point1))
-    print("2:",kNearestNeighbours(fakeData, k+1, point2) == 2, kNearestNeighbours(fakeData, k+1, point2))
-
-    print("k == 3")
-    print("0:",kNearestNeighbours(fakeData, k+2, point0) == 0, kNearestNeighbours(fakeData, k+2, point0))
-    print("1:",kNearestNeighbours(fakeData, k+2, point1) == 1, kNearestNeighbours(fakeData, k+2, point1))
-    print("2:",kNearestNeighbours(fakeData, k+2, point2) == 2, kNearestNeighbours(fakeData, k+2, point2))
+    
+    
+    # temporarily commented to reduce bloat
+    # print(kNearestNeighbours(fakeData, k, point0) == 0) 
+    # print(kNearestNeighbours(fakeData, k, point1) == 1)
+    # print(kNearestNeighbours(fakeData, k, point2) == 2)
+    # print()
+    # print(kNearestNeighbours(fakeData, k+1, point0) == 0)
+    # print(kNearestNeighbours(fakeData, k+1, point1) == 1)
+    # print(kNearestNeighbours(fakeData, k+1, point2) == 2)
+    # print()
+    print(kNearestNeighbours(fakeData, k+2, point0) == 0)
+    print(kNearestNeighbours(fakeData, k+2, point1) == 1)
+    print(kNearestNeighbours(fakeData, k+2, point2) == 2)
         
     print()
     
 
 
 def testDetermineClassMembership():
+    print("Test Determine Class Membership")
     classesNum = 3;
     fakeData = [
         [0, 0, 0, 0, 0],
         [100, 100, 100, 100, 1],
         [50, 50, 50, 50, 2]
         ]
+    
+    # In case of total draw, it should pick the first class
     nearestNeighboursIndexes = [2, 1, 0]
     print(determineClassMembership(fakeData, nearestNeighboursIndexes, classesNum) == 2)
     nearestNeighboursIndexes = [0, 1, 2]
     print(determineClassMembership(fakeData, nearestNeighboursIndexes, classesNum) == 0)
+    print()
     
+def testOnRealData():
+
+        
+
+    
+    print("Test Out For Real")
+    trainData = fileLoader("data3_train.csv")
+    classesNum = 3;
+    testData = fileLoader("data3_test.csv")
+    k = 3
+    
+    # somewhere here we should normalise both of them
+    # normalise based on the trainData, NOT testData
+    
+    
+    
+    #for checking the results
+    classCount = []
+    for i in range(classesNum):
+        classCount.append(0)
+    
+    
+    for point in testData:
+        #ignore the class assigment for the purposes of our guessing (the [:-1] part)
+        classDetermined = kNearestNeighbours(trainData, k, point[:-1])
+        classCount[classDetermined] += 1
+        # print(classDetermined)
+    
+    print("Real class count is: [15, 15, 15]")
+    print("What we've found is:", classCount) #we are 1 class assignment  off
+    print()
+
 testFindKNearestNeighbours()
 testKnearestNeighbours()
 testDetermineClassMembership()
+
+testOnRealData()

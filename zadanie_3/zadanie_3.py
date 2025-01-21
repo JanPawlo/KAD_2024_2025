@@ -12,8 +12,10 @@ def fileLoader(path:str):
     i = 0;
     for x in file:
         dataTable.append(x.split(','))
-        for j in range(5):
+        for j in range(4):
             dataTable[i][j] = float(dataTable[i][j])
+        # last value is a class so it has to be int
+        dataTable[i][4] = int(dataTable[i][4])
         i += 1
     
     file.close()
@@ -41,9 +43,11 @@ def euclideanDistance(p1:list, p2:list) -> float:
     
     return distance
 
+
 # @param point - classified object
 # @param data - 2D list with [x, y, z, ... , classNumber] pattern
 def kNearestNeighbours(data:list, k:int, point:list):
+    
     
     L = []
     nearestNeighbours = []
@@ -107,6 +111,7 @@ def determineClassMembership(data:list, nearestNeighboursIndexes:list, classesNu
         classCount.append(0)
         
     # count the classes 
+    
     for x in nearestNeighboursIndexes:
         classCount[data[x][-1]] += 1
     
