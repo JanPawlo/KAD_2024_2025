@@ -216,6 +216,35 @@ def getKNNSuccessPercentage(testData:list, trainingData:list):
     
     return successPercentage
             
+# Cuts out 3 out of 5 columns from the orignal "data" list
+# requires a < b, doesn't allow for the removal of last column (where class is) (index 4)
+
+# @param Data - original list (could be both test and training)
+# @param a - int index of the trait to be picked <0,1,2,3>
+# @param b - int index of the trait to be picked <0,1,2,3>
+# @return a list with selected 2 of the 4 traits
+def reduceToTwoDimensions(data:list, a:int, b:int):
+    if a not in(0, 1, 2, 3):
+        raise ValueError("parameter A is out of range for the data, stay within 0-3")
+    elif b not in(0, 1, 2, 3):
+        raise ValueError("parameter B is out of range for the data, stay within 0-3")
+    elif a == b:
+        raise ValueError("parameters A and B cannot be the same")
+    elif a > b:
+        raise ValueError("parameter A should(?) be smaller than B")
+        
+    reducedList = list()
+    
+    for i in range(len(data)):
+        reducedList.append(list())
+        reducedList[i].append(data[i][a])
+        reducedList[i].append(data[i][b])
+        reducedList[i].append(data[i][4])
+    
+    return reducedList
+    
+    
+    
     
     
     

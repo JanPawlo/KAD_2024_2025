@@ -105,8 +105,57 @@ def testOnRealData():
         # print(classDetermined)
     
     print("Real class count is: [15, 15, 15]")
-    print("What we've found is:", classCount) #we are 1 class assignment  off
+    print("What we've found is:", classCount) #we are 1 class assignment off
     print()
+
+
+def testReduceToTwoDimensions():
+    fakeData = [
+        [0, 5, 10, 0, 0],
+        [100, 90, 120, 100, 1],
+        [50, 20, 40, 50, 2]
+        ]
+    answerAB = [
+        [0, 5, 0],
+        [100, 90, 1],
+        [50, 20, 2]
+        ]
+    answerBC = [
+        [5, 10, 0],
+        [90, 120, 1],
+        [20, 40, 2]
+        ]
+    print("Test Reduce To Two Dimensions")
+    
+    print(reduceToTwoDimensions(fakeData, 0, 1) == answerAB)
+    print(reduceToTwoDimensions(fakeData, 1, 2) == answerBC)
+
+
+def testReduceRealData():
+    trainingData = fileLoader("data3_train.csv")
+    testData = fileLoader("data3_test.csv")
+    
+    # gets us our 6 combinations of the 4 traits
+    print('Rounded accuracy:')
+    for a in range (4):
+        for b in range(4):
+            if (a == b):
+                continue;
+            elif(a > b):
+                continue;
+            # print(a, b)
+            reducedTrainingData = reduceToTwoDimensions(trainingData, a, b)
+            reducedTestData = reduceToTwoDimensions(testData, a, b)
+            
+            results = getKNNSuccessPercentage(reducedTestData, reducedTrainingData)
+            for i in range(len(results)):
+                results[i]  = round(results[i], 2)
+            # print(getKNNSuccessPercentage(reducedTestData, reducedTrainingData))
+            # print()
+
+            print(a, b, results)
+            
+            
 
 testFindKNearestNeighbours()
 testKnearestNeighbours()
@@ -114,3 +163,5 @@ testDetermineClassMembership()
 testMinMaxScaling()
 
 testOnRealData()
+testReduceToTwoDimensions()
+testReduceRealData()
