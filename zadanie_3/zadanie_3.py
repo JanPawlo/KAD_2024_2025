@@ -131,9 +131,69 @@ def determineClassMembership(data:list, nearestNeighboursIndexes:list, classesNu
     elif topOwners != 1:
         raise ValueError("Didn't find a single fitting class to the top score somehow")
     else:
-        return classMembership    
-        
+        return classMembership 
+
+def getMinimumTraits(data:list) -> list:
     
+    minimumTraits = []
+    for i in range(len(data[0])):
+        minimumTraits.append(float('inf'))
+    
+    for x in data:
+        for i in range(len(data[0])):
+            if x[i] < minimumTraits[i]:
+                minimumTraits[i] = x[i]
+                
+    return minimumTraits
+                
+def getMaximumTraits(data:list) -> list:
+    
+    maximumTraits = []
+    for i in range(len(data[0])):
+        maximumTraits.append(0)
+    
+    for x in data:
+        for i in range(len(data[0])):
+            if x[i] > maximumTraits[i]:
+                maximumTraits[i] = x[i]
+                
+    return maximumTraits
+     
+                
+def minMaxScaling(data:list):
+    
+    scaled_data = [[None for _ in range(len(data[0]))] for _ in range(len(data))]
+    
+    for i in range(len(data[0])):
+        
+        minimum = getMinimumTraits(data)[i] # min of current trait
+        maximum = getMaximumTraits(data)[i] # max of current trait
+        
+        for j in range(len(data)):
+            scaled_data[j][i] = (data[j][i] - minimum)/(maximum - minimum)
+    
+    return scaled_data
+
+                
+# @param point - data point that is going to be normalized
+# @param trainingData - 2D list with training data WITHOUT CLASSES
+def minMaxScalingPoint(point:list, trainingData:list):
+    
+    if(len(point) != len(trainingData[0])):
+        raise Exception("Diffrent nr. of dimensions on data")
+    
+    scaled_point = [None for _ in range(len(point))]
+    
+    for i in range(len(point)):
+        minimum = getMinimumTraits(trainingData)[i] # min of current trait
+        maximum = getMaximumTraits(trainingData)[i] # max of current trait
+        
+        scaled_point[i] = (point[i] - minimum)/(maximum - minimum)
+    
+    return scaled_point
+
+def roundList(lista:list, dokladnosc:int):
+    return [round(x, dokladnosc) for x in lista]
     
     
     
