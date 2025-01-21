@@ -213,7 +213,8 @@ def getKNNSuccessPercentage(testData:list, trainingData:list):
             if(x[-1] == kNearestNeighbours(trainingData, k+1, x[:-1])):
                 successPercentage[k] += 1 # if success add 1
         successPercentage[k] /= len(testData) # convert to %
-    
+        successPercentage[k] *= 100
+        
     return successPercentage
             
 # Cuts out 3 out of 5 columns from the orignal "data" list
