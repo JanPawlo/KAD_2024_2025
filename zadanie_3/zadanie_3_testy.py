@@ -1,4 +1,7 @@
 from zadanie_3 import *
+import matplotlib.pyplot as plt
+import seaborn as sn
+import pandas as pd
 
 def testFindKNearestNeighbours():
     print("Test FIND K Nearest Neighbours")
@@ -156,6 +159,23 @@ def testReduceRealData():
             print(a, b, results)
             
             
+def testConfusionMatrix():
+    trainingData = fileLoader("data3_train.csv")
+    testData = fileLoader("data3_test.csv")
+    
+    
+    confusionMatrix = calculateConfusionMatrix(testData, trainingData)
+    print(confusionMatrix)
+
+    df_cm = pd.DataFrame(confusionMatrix, range(3), range(3))
+    sn.set(font_scale=1.4) # for label size
+    sn.heatmap(df_cm, annot=True, annot_kws={"size": 14}) # font size
+    
+    
+    
+    
+    plt.show()
+    
 
 testFindKNearestNeighbours()
 testKnearestNeighbours()
@@ -165,3 +185,6 @@ testMinMaxScaling()
 testOnRealData()
 testReduceToTwoDimensions()
 testReduceRealData()
+
+testConfusionMatrix()
+
