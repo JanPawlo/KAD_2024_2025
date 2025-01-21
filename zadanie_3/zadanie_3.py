@@ -158,25 +158,29 @@ def getMaximumTraits(data:list) -> list:
                 maximumTraits[i] = x[i]
                 
     return maximumTraits
-     
-                
+
+                    
 def minMaxScaling(data:list):
     
-    scaled_data = [[None for _ in range(len(data[0]))] for _ in range(len(data))]
+    scaled_data = [[None for _ in range(len(data[0])-1)] for _ in range(len(data))]
     
-    for i in range(len(data[0])):
+    for i in range(len(data[0])-1):
         
         minimum = getMinimumTraits(data)[i] # min of current trait
         maximum = getMaximumTraits(data)[i] # max of current trait
         
         for j in range(len(data)):
             scaled_data[j][i] = (data[j][i] - minimum)/(maximum - minimum)
+        
+    # add classes
+    for i in range(len(data)):
+        scaled_data[i].append(data[i][-1])
     
     return scaled_data
 
                 
 # @param point - data point that is going to be normalized
-# @param trainingData - 2D list with training data WITHOUT CLASSES
+# @param trainingData - 2D list with training data
 def minMaxScalingPoint(point:list, trainingData:list):
     
     if(len(point) != len(trainingData[0])):
@@ -184,17 +188,34 @@ def minMaxScalingPoint(point:list, trainingData:list):
     
     scaled_point = [None for _ in range(len(point))]
     
-    for i in range(len(point)):
+    for i in range(len(point)-1):
         minimum = getMinimumTraits(trainingData)[i] # min of current trait
         maximum = getMaximumTraits(trainingData)[i] # max of current trait
         
         scaled_point[i] = (point[i] - minimum)/(maximum - minimum)
+    
+    scaled_point[-1] = point[-1] # append the class
     
     return scaled_point
 
 def roundList(lista:list, dokladnosc:int):
     return [round(x, dokladnosc) for x in lista]
     
+# @param testData, trainingData - lists with normalised data
+# @returns - list with percentage of succeses for each k: [k=1, k=2, ..., k=15]
+def getKNNSuccessPercentage(testData:list, trainingData:list):
+    
+    successPercentage = []
+    
+    for k in range(15):
+        successPercentage.append(0) 
+        for x in testData:
+            if(x[-1] == kNearestNeighbours(trainingData, k+1, x[:-1])):
+                successPercentage[k] += 1 # if success add 1
+        successPercentage[k] /= len(testData) # convert to %
+    
+    return successPercentage
+            
     
     
     
