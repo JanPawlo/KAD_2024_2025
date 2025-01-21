@@ -244,7 +244,7 @@ def reduceToTwoDimensions(data:list, a:int, b:int):
     
     return reducedList
 
-def calculateConfusionMatrix(testData, trainingData):
+def calculateConfusionMatrix(testData, trainingData, k):
     confusionMatrix = list()
     for i in range(3):
         confusionMatrix.append(list())
@@ -258,15 +258,14 @@ def calculateConfusionMatrix(testData, trainingData):
     # ]
     # print(confusionMatrix)
 
-    for k in range(15):
-        # successPercentage.append(0) 
-        for x in testData:
-            # first is guess, second is true
-            guess = kNearestNeighbours(testData, k+1, x[:-1])
-            true = x[-1]
-            # if (guess != true):
-            #     print("guess:", guess, "true:", true)
-            confusionMatrix[guess][true] +=1
+    # successPercentage.append(0) 
+    for x in testData:
+        # first is guess, second is true
+        guess = kNearestNeighbours(testData, k, x[:-1])
+        true = x[-1]
+        if (guess != true):
+            print("guess:", guess, "true:", true)
+        confusionMatrix[guess][true] +=1
     
     
     return confusionMatrix

@@ -164,7 +164,7 @@ def testConfusionMatrix():
     testData = fileLoader("data3_test.csv")
     
     
-    confusionMatrix = calculateConfusionMatrix(testData, trainingData)
+    confusionMatrix = calculateConfusionMatrix(testData, trainingData, 1)
     print(confusionMatrix)
 
 
