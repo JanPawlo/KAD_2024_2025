@@ -59,6 +59,23 @@ def testDetermineClassMembership():
     print(determineClassMembership(fakeData, nearestNeighboursIndexes, classesNum) == 0)
     print()
     
+
+def testMinMaxScaling():
+    print("Test Min Max Scaling")
+    
+    data = [x[:-1] for x in fileLoader("testData2.csv")]
+        
+    scaled_data = minMaxScaling(data)
+    
+    print(roundList(scaled_data[0], 2) == [0.7, 0.6, 0.25, 0.33])
+    print(roundList(scaled_data[1], 2) == [0.5, 0.1, 0.25, 0.33])
+    print(roundList(scaled_data[2], 2) == [0.3, 0.3, 0, 0.33])
+    print(roundList(scaled_data[5], 2) == [1, 1, 1, 1])
+    print(roundList(scaled_data[8], 2) == [0, 0, 0.25, 0.33])
+    
+    print()
+
+    
 def testOnRealData():
 
         
@@ -94,5 +111,6 @@ def testOnRealData():
 testFindKNearestNeighbours()
 testKnearestNeighbours()
 testDetermineClassMembership()
+testMinMaxScaling()
 
 testOnRealData()
