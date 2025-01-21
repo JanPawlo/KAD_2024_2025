@@ -23,7 +23,7 @@ def testKnearestNeighbours():
         [50, 50, 50, 50, 2]
         ]
     k = 1
-    point0 = [0, 1, 1, -1]; point1 = [100, 80, 80, 120]; point2 = [50, 40, 60, 70];
+    point0 = [0, 0, 0, 0]; point1 = [100, 100, 100, 100]; point2 = [50, 50, 50, 50];
     print("k == 1")
     print("0:",kNearestNeighbours(fakeData, k, point0) == 0, kNearestNeighbours(fakeData, k, point0)) 
     print("1:",kNearestNeighbours(fakeData, k, point1) == 1, kNearestNeighbours(fakeData, k, point1))
@@ -40,8 +40,21 @@ def testKnearestNeighbours():
     print("2:",kNearestNeighbours(fakeData, k+2, point2) == 2, kNearestNeighbours(fakeData, k+2, point2))
         
     print()
+    
 
 
+def testDetermineClassMembership():
+    classesNum = 3;
+    fakeData = [
+        [0, 0, 0, 0, 0],
+        [100, 100, 100, 100, 1],
+        [50, 50, 50, 50, 2]
+        ]
+    nearestNeighboursIndexes = [2, 1, 0]
+    print(determineClassMembership(fakeData, nearestNeighboursIndexes, classesNum) == 2)
+    nearestNeighboursIndexes = [0, 1, 2]
+    print(determineClassMembership(fakeData, nearestNeighboursIndexes, classesNum) == 0)
     
 testFindKNearestNeighbours()
 testKnearestNeighbours()
+testDetermineClassMembership()

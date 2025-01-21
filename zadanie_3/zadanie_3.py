@@ -82,10 +82,26 @@ def findNearestNeighbours(k:int, L:list):
     
     return nearestNeighboursIndexes
 
-# @param classesNum -> number of classes
+    #@param data - all the points
+    #@param nearestNeighboursIndexes - SORTED list of indexes(within the "data") of the "near" points
+    #@param classesNum - number of classes
+    #returns -> int number, that signifies class member ship for our point
 def determineClassMembership(data:list, nearestNeighboursIndexes:list, classesNum:int):
+    if len(data) == 0:
+        raise ValueError("List of all data is empty!")
+    elif len(nearestNeighboursIndexes) == 0:
+        raise ValueError("List of the near neighbours indexes is empty!")
+    elif classesNum <=0:
+        raise ValueError("Number of classes has to be a positive intiger")
     
-    # creating list with classesNum elements with each element equal to 0
+    #default class assignment
+    #important: we assume the nearestNeighboursIndexes is sorted based on distance ascending
+    nearestPointDataIndex = nearestNeighboursIndexes[0]
+    nearestPointClass = data[nearestPointDataIndex][-1]
+    classMembership = nearestPointClass
+    
+    # creating list for counting the class occurances
+    # [0, 0, 0] for classNum = 3
     classCount = []
     for i in range(classesNum):
         classCount.append(0)
@@ -94,21 +110,28 @@ def determineClassMembership(data:list, nearestNeighboursIndexes:list, classesNu
     for x in nearestNeighboursIndexes:
         classCount[data[x][-1]] += 1
     
-    # determine the most common class
-    classMembership = 0
-    tie = False
-    for i in range(1, classesNum):
-        if(classCount[classMembership] < classCount[i]):
+    topScore = max(classCount)
+    topOwners = 0 #classes that have the same count as max
+    
+    # find the classes that have the same count as max
+    for i in range(3):
+        if classCount[i] == topScore:
             classMembership = i
-            tie = False
-        elif(classCount[classMembership] == classCount[i]):
-            tie = True
+            topOwners += 1
             
-    # in case of a tie run again with a smaller k
-    if(tie):
-        determineClassMembership(data, nearestNeighboursIndexes[:-1], classesNum)
-
+    # checking the outcomes
+    # if there's a tie, do recursion[lovely]:
+    if topOwners > 1:
+        return determineClassMembership(data, nearestNeighboursIndexes[:-1], classesNum)
+    elif topOwners != 1:
+        raise ValueError("Didn't find a single fitting class to the top score somehow")
+    else:
+        return classMembership    
+        
     
-    return classMembership
     
-            
+    
+    
+    
+    
+    
