@@ -21,13 +21,14 @@ def main():
     plt.xlim(0.5,15.5)
     plt.xticks(k)
     plt.xlabel("k")
+    plt.ylabel("%")
     plt.title('Wszystkie cechy') 
     plt.show()
     
     print('Dla wszystkich cech:')
-    print('k = 5: ', calculateConfusionMatrix(normalizedTestData, normalizedTrainingData, 5));
+    print('k = 7: ', calculateConfusionMatrix(normalizedTestData, normalizedTrainingData, 7));
     
-    figure, axis1 = plt.subplots(3, 1, figsize=(10, 14))
+    figure, axis1 = plt.subplots(3, 1, figsize=(10,16))
     
     reducedTrainingData = reduceToTwoDimensions(normalizedTrainingData, 0, 1)
     reducedTestData = reduceToTwoDimensions(normalizedTestData, 0, 1)
@@ -36,6 +37,7 @@ def main():
     axis1[0].set_xlim(0.5,15.5)
     axis1[0].set_xticks(k)
     axis1[0].set_xlabel('k')
+    axis1[0].set_ylabel('%')
     axis1[0].set_title('Długość działki kielicha, szerokość działki kielicha')
     
     print('Długosc dzialki kielicha, szerokosc dzialki kielicha:')
@@ -48,6 +50,7 @@ def main():
     axis1[1].set_xlim(0.5,15.5)
     axis1[1].set_xticks(k)
     axis1[1].set_xlabel('k')
+    axis1[1].set_ylabel('%')
     axis1[1].set_title('Długość działki kielicha, długość płatka')
     
     print('dlugosc dzialki kielicha, dlugosc platka:')
@@ -60,13 +63,14 @@ def main():
     axis1[2].set_xlim(0.5,15.5)
     axis1[2].set_xticks(k)
     axis1[2].set_xlabel('k')
+    axis1[2].set_ylabel('%')
     axis1[2].set_title('Długość działki kielicha, szerokosć płatka')
     
     print('dlugosc dzialki kielicha, szerokosc platka:')
     print('k = 5: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 5));
     
     
-    figure, axis2 = plt.subplots(3, 1, figsize=(10, 14))
+    figure, axis2 = plt.subplots(3, 1, figsize=(10, 16))
     
     reducedTrainingData = reduceToTwoDimensions(normalizedTrainingData, 1, 2)
     reducedTestData = reduceToTwoDimensions(normalizedTestData, 1, 2)
@@ -75,6 +79,7 @@ def main():
     axis2[0].set_xlim(0.5,15.5)
     axis2[0].set_xticks(k)
     axis2[0].set_xlabel('k')
+    axis2[0].set_ylabel('%')
     axis2[0].set_title('Szerokość działki kielicha, długość płatka')
     
     print('szerokosc dzialki kielicha, dlugosc platka:')
@@ -87,6 +92,7 @@ def main():
     axis2[1].set_xlim(0.5,15.5)
     axis2[1].set_xticks(k)
     axis2[1].set_xlabel('k')
+    axis2[1].set_ylabel('%')
     axis2[1].set_title('Szerokość działki kielicha, szerokość płatka')
     
     print('szerokosc dzialki kielicha, szerokosc platka:')
@@ -99,6 +105,7 @@ def main():
     axis2[2].set_xlim(0.5,15.5)
     axis2[2].set_xticks(k)
     axis2[2].set_xlabel('k')
+    axis2[2].set_ylabel('%')
     axis2[2].set_title('Długość płatka, szerokość płatka')
     
     print('dlugosc platka, szerokosc platka:')
