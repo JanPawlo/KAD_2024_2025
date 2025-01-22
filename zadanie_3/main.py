@@ -23,8 +23,9 @@ def main():
     plt.xlabel("k")
     # plt.title() -- wszystkie cechy
     plt.show()
-
-    # calculateConfusionMatrix(normalizedTestData, normalizedTrainingData)
+    
+    print('Dla wszystkich cech:')
+    print('k = 5: ', calculateConfusionMatrix(normalizedTestData, normalizedTrainingData, 5));
     
     figure, axis1 = plt.subplots(3, 1, figsize=(10, 14))
     
@@ -37,6 +38,9 @@ def main():
     axis1[0].set_xlabel('k')
     # axis1[0].title --- dlugosc dzialki kielicha, szerokosc dzialki kielicha
     
+    print('dlugosc dzialki kielicha, szerokosc dzialki kielicha:')
+    print('k = 4: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 4));
+    
     reducedTrainingData = reduceToTwoDimensions(normalizedTrainingData, 0, 2)
     reducedTestData = reduceToTwoDimensions(normalizedTestData, 0, 2)
     axis1[1].bar(k, getKNNSuccessPercentage(reducedTestData, reducedTrainingData))
@@ -46,6 +50,9 @@ def main():
     axis1[1].set_xlabel('k')
     # axis1[1].title --- dlugosc dzialki kielicha, dlugosc platka
     
+    print('dlugosc dzialki kielicha, dlugosc platka:')
+    print('k = 11: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 11));
+    
     reducedTrainingData = reduceToTwoDimensions(normalizedTrainingData, 0, 3)
     reducedTestData = reduceToTwoDimensions(normalizedTestData, 0, 3)
     axis1[2].bar(k, getKNNSuccessPercentage(reducedTestData, reducedTrainingData))
@@ -54,6 +61,10 @@ def main():
     axis1[2].set_xticks(k)
     axis1[2].set_xlabel('k')
     # axis1[2].title --- dlugosc dzialki kielicha, szerokosc platka
+    
+    print('dlugosc dzialki kielicha, szerokosc platka:')
+    print('k = 5: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 5));
+    
     
     figure, axis2 = plt.subplots(3, 1, figsize=(10, 14))
     
@@ -66,6 +77,9 @@ def main():
     axis2[0].set_xlabel('k')
     # axis2[0].title --- szerokosc dzialki kielicha, dlugosc platka
     
+    print('szerokosc dzialki kielicha, dlugosc platka:')
+    print('k = 5: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 5));
+    
     reducedTrainingData = reduceToTwoDimensions(normalizedTrainingData, 1, 3)
     reducedTestData = reduceToTwoDimensions(normalizedTestData, 1, 3)
     axis2[1].bar(k, getKNNSuccessPercentage(reducedTestData, reducedTrainingData))
@@ -75,6 +89,9 @@ def main():
     axis2[1].set_xlabel('k')
     # axis2[1].title --- szerokosc dzialki kielicha, szerokosc platka
     
+    print('szerokosc dzialki kielicha, szerokosc platka:')
+    print('k = 3: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 3));
+    
     reducedTrainingData = reduceToTwoDimensions(normalizedTrainingData, 2, 3)
     reducedTestData = reduceToTwoDimensions(normalizedTestData, 2, 3)
     axis2[2].bar(k, getKNNSuccessPercentage(reducedTestData, reducedTrainingData))
@@ -83,6 +100,9 @@ def main():
     axis2[2].set_xticks(k)
     axis2[2].set_xlabel('k')
     # axis2[1].title --- dlugosc platka, szerokosc platka
+    
+    print('dlugosc platka, szerokosc platka:')
+    print('k = 1: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 1));
     
     return 0;
     

@@ -263,8 +263,6 @@ def calculateConfusionMatrix(testData, trainingData, k):
         # first is guess, second is true
         guess = kNearestNeighbours(testData, k, x[:-1])
         true = x[-1]
-        if (guess != true):
-            print("guess:", guess, "true:", true)
         confusionMatrix[guess][true] +=1
     
     
