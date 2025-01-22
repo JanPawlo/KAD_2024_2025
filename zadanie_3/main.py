@@ -21,7 +21,7 @@ def main():
     plt.xlim(0.5,15.5)
     plt.xticks(k)
     plt.xlabel("k")
-    # plt.title() -- wszystkie cechy
+    plt.title('Wszystkie cechy') 
     plt.show()
     
     print('Dla wszystkich cech:')
@@ -36,9 +36,9 @@ def main():
     axis1[0].set_xlim(0.5,15.5)
     axis1[0].set_xticks(k)
     axis1[0].set_xlabel('k')
-    # axis1[0].title --- dlugosc dzialki kielicha, szerokosc dzialki kielicha
+    axis1[0].set_title('Długość działki kielicha, szerokość działki kielicha')
     
-    print('dlugosc dzialki kielicha, szerokosc dzialki kielicha:')
+    print('Długosc dzialki kielicha, szerokosc dzialki kielicha:')
     print('k = 4: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 4));
     
     reducedTrainingData = reduceToTwoDimensions(normalizedTrainingData, 0, 2)
@@ -48,7 +48,7 @@ def main():
     axis1[1].set_xlim(0.5,15.5)
     axis1[1].set_xticks(k)
     axis1[1].set_xlabel('k')
-    # axis1[1].title --- dlugosc dzialki kielicha, dlugosc platka
+    axis1[1].set_title('Długość działki kielicha, długość płatka')
     
     print('dlugosc dzialki kielicha, dlugosc platka:')
     print('k = 11: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 11));
@@ -60,7 +60,7 @@ def main():
     axis1[2].set_xlim(0.5,15.5)
     axis1[2].set_xticks(k)
     axis1[2].set_xlabel('k')
-    # axis1[2].title --- dlugosc dzialki kielicha, szerokosc platka
+    axis1[2].set_title('Długość działki kielicha, szerokosć płatka')
     
     print('dlugosc dzialki kielicha, szerokosc platka:')
     print('k = 5: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 5));
@@ -75,7 +75,7 @@ def main():
     axis2[0].set_xlim(0.5,15.5)
     axis2[0].set_xticks(k)
     axis2[0].set_xlabel('k')
-    # axis2[0].title --- szerokosc dzialki kielicha, dlugosc platka
+    axis2[0].set_title('Szerokość działki kielicha, długość płatka')
     
     print('szerokosc dzialki kielicha, dlugosc platka:')
     print('k = 5: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 5));
@@ -87,7 +87,7 @@ def main():
     axis2[1].set_xlim(0.5,15.5)
     axis2[1].set_xticks(k)
     axis2[1].set_xlabel('k')
-    # axis2[1].title --- szerokosc dzialki kielicha, szerokosc platka
+    axis2[1].set_title('Szerokość działki kielicha, szerokość płatka')
     
     print('szerokosc dzialki kielicha, szerokosc platka:')
     print('k = 3: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 3));
@@ -99,7 +99,7 @@ def main():
     axis2[2].set_xlim(0.5,15.5)
     axis2[2].set_xticks(k)
     axis2[2].set_xlabel('k')
-    # axis2[1].title --- dlugosc platka, szerokosc platka
+    axis2[2].set_title('Długość płatka, szerokość płatka')
     
     print('dlugosc platka, szerokosc platka:')
     print('k = 1: ', calculateConfusionMatrix(reducedTestData, reducedTrainingData, 1));
